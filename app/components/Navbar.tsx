@@ -86,6 +86,13 @@ export default function Navbar() {
               Writeups
             </Link>
 
+            <Link
+              href="/resume"
+              className="px-3 py-2 text-sm font-mono rounded-md transition-all duration-200 text-muted hover:text-neon-green hover:bg-overlay/5"
+            >
+              Resume
+            </Link>
+
             <div className="ml-2">
               <ThemeToggle />
             </div>
@@ -160,6 +167,20 @@ export default function Navbar() {
                 >
                   <span className="text-muted-cyan mr-2">$</span>
                   Writeups
+                </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: (navLinks.length + 1) * 0.05 }}
+              >
+                <Link
+                  href="/resume"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-sm font-mono rounded-md transition-all text-muted hover:text-neon-green hover:bg-overlay/5"
+                >
+                  <span className="text-muted-cyan mr-2">$</span>
+                  Resume
                 </Link>
               </motion.div>
             </div>

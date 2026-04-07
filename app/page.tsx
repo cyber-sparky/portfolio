@@ -6,6 +6,7 @@ import Skills from '@/app/components/Skills';
 // import Projects from '@/app/components/Projects';    // TODO: Uncomment when ready
 // import HallOfFame from '@/app/components/HallOfFame'; // TODO: Uncomment when ready
 // import Blog from '@/app/components/Blog';             // TODO: Uncomment when ready
+import WriteupsCTA from '@/app/components/WriteupsCTA';
 import Contact from '@/app/components/Contact';
 
 const MatrixRain = dynamic(() => import('@/app/components/MatrixRain'), {
@@ -24,6 +25,7 @@ export default function Home() {
         {/* <Projects /> */}
         {/* <HallOfFame /> */}
         {/* <Blog /> */}
+        <WriteupsCTA />
         <Contact />
       </main>
     </>
