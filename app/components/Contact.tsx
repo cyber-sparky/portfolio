@@ -77,7 +77,7 @@ export default function Contact() {
           >
             Available for:{' '}
             <span className="text-muted">
-              Security Consulting • AppSec Collaboration • CTF Teams
+              AppSec Collaboration • CTF Teams
             </span>
           </motion.p>
         </motion.div>

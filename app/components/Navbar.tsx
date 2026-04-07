@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from './ThemeProvider';
-import { FiSun, FiMoon } from 'react-icons/fi';
+import Link from 'next/link';
+import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -15,8 +15,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [scrolled, setScrolled] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -81,23 +79,20 @@ export default function Navbar() {
               </button>
             ))}
 
-            <button
-              onClick={toggleTheme}
-              className="ml-2 p-2 rounded-md text-dimmed hover:text-neon-green hover:bg-overlay/5 transition-all duration-200"
-              aria-label="Toggle theme"
+            <Link
+              href="/writeups"
+              className="px-3 py-2 text-sm font-mono rounded-md transition-all duration-200 text-muted hover:text-neon-green hover:bg-overlay/5"
             >
-              {theme === 'dark' ? <FiSun className="w-4 h-4" /> : <FiMoon className="w-4 h-4" />}
-            </button>
+              Writeups
+            </Link>
+
+            <div className="ml-2">
+              <ThemeToggle />
+            </div>
           </div>
 
           <div className="flex items-center gap-1 md:hidden">
-            <button
-              onClick={toggleTheme}
-              className="p-2 text-dimmed hover:text-neon-green transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? <FiSun className="w-4 h-4" /> : <FiMoon className="w-4 h-4" />}
-            </button>
+            <ThemeToggle />
 
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -153,6 +148,20 @@ export default function Navbar() {
                   {link.label}
                 </motion.button>
               ))}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: navLinks.length * 0.05 }}
+              >
+                <Link
+                  href="/writeups"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-sm font-mono rounded-md transition-all text-muted hover:text-neon-green hover:bg-overlay/5"
+                >
+                  <span className="text-muted-cyan mr-2">$</span>
+                  Writeups
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         )}

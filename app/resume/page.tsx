@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import PrintButton from './PrintButton';
+import ThemeToggle from '@/app/components/ThemeToggle';
 
 export const metadata: Metadata = {
   title: 'Resume — Pranaw Murugeasan | Security Engineer',
@@ -38,7 +39,10 @@ export default function ResumePage() {
           >
             ← back to portfolio
           </a>
-          <PrintButton />
+          <div className="flex items-center gap-2">
+            <PrintButton />
+            <ThemeToggle />
+          </div>
         </div>
       </div>
 
