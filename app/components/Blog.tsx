@@ -6,22 +6,22 @@ import { FiExternalLink, FiClock, FiCalendar } from 'react-icons/fi';
 
 export default function Blog() {
   return (
-    <section id="blog" className="py-24 px-4 relative z-10">
+    <section id="blog" className="py-16 sm:py-24 px-3 sm:px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold font-mono text-white mb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-white mb-2">
             <span className="text-muted-cyan">05.</span> blog_&_writeups
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-neon-green to-transparent" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {blogPosts.map((post, i) => (
             <motion.a
               key={post.title}
@@ -33,7 +33,7 @@ export default function Blog() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
               whileHover={{ y: -5 }}
-              className="group bg-card-bg border border-card-border rounded-lg p-6 card-hover-glow block"
+              className="group bg-card-bg border border-card-border rounded-lg p-4 sm:p-6 card-hover-glow block"
             >
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-xs font-mono px-2 py-1 bg-muted-cyan/10 border border-muted-cyan/20 text-muted-cyan rounded">

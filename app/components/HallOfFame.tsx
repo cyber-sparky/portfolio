@@ -12,16 +12,16 @@ const severityConfig: Record<Severity, { color: string; bg: string; border: stri
 
 export default function HallOfFame() {
   return (
-    <section id="halloffame" className="py-24 px-4 relative z-10">
+    <section id="halloffame" className="py-16 sm:py-24 px-3 sm:px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold font-mono text-white mb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-white mb-2">
             <span className="text-muted-cyan">04.</span> hall_of_fame
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-neon-green to-transparent" />
@@ -49,9 +49,9 @@ export default function HallOfFame() {
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: isEven ? -30 : 30 }}
+                  initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: true, margin: '-50px' }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className={`relative flex ${
                     isEven ? 'md:justify-start' : 'md:justify-end'
@@ -60,7 +60,7 @@ export default function HallOfFame() {
                   <div className="absolute left-4 md:left-1/2 top-6 w-3 h-3 -translate-x-1.5 rounded-full bg-neon-green border-2 border-bg z-10 shadow-[0_0_8px_rgba(0,255,65,0.5)]" />
 
                   <div
-                    className={`ml-12 md:ml-0 md:w-[calc(50%-2rem)] bg-card-bg border border-card-border rounded-lg p-5 card-hover-glow ${
+                    className={`ml-10 sm:ml-12 md:ml-0 md:w-[calc(50%-2rem)] bg-card-bg border border-card-border rounded-lg p-4 sm:p-5 card-hover-glow ${
                       isEven ? 'md:mr-auto' : 'md:ml-auto'
                     }`}
                   >

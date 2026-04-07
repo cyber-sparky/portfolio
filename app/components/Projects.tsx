@@ -6,22 +6,22 @@ import { FiGithub, FiExternalLink } from 'react-icons/fi';
 
 export default function Projects() {
   return (
-    <section id="projects" className="py-24 px-4 relative z-10">
+    <section id="projects" className="py-16 sm:py-24 px-3 sm:px-4 relative z-10">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16"
+          className="mb-10 sm:mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold font-mono text-white mb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-white mb-2">
             <span className="text-muted-cyan">03.</span> projects
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-neon-green to-transparent" />
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {projects.map((project, i) => (
             <motion.div
               key={project.title}
@@ -45,7 +45,7 @@ export default function Projects() {
                 </span>
               </div>
 
-              <div className="p-6 flex flex-col flex-1">
+              <div className="p-4 sm:p-6 flex flex-col flex-1">
                 {project.featured && (
                   <span className="inline-block w-fit text-xs font-mono text-neon-green bg-neon-green/10 border border-neon-green/20 px-2 py-0.5 rounded mb-3">
                     ★ Featured

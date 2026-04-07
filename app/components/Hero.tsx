@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 
 const terminalLines = [
   { prompt: '~$', command: 'whoami', delay: 500 },
-  { prompt: '', command: 'security_engineer | bug_bounty_hunter | recon_automation', delay: 100, isOutput: true },
+  { prompt: '', command: 'security_engineer | appsec | devsecops | ai security', delay: 100, isOutput: true },
   { prompt: '~$', command: 'cat /etc/mission', delay: 800 },
-  { prompt: '', command: 'Breaking things. Responsibly.', delay: 100, isOutput: true },
+  { prompt: '', command: 'Securing code. Shipping safe.', delay: 100, isOutput: true },
   { prompt: '~$', command: './init_portfolio.sh', delay: 600 },
   { prompt: '', command: '[+] initializing portfolio...', delay: 100, isOutput: true },
   { prompt: '', command: '[+] loading modules ██████████ 100%', delay: 50, isOutput: true },
@@ -62,11 +62,11 @@ function TerminalLine({
   }, [done, onDone, line.delay]);
 
   return (
-    <div className="flex gap-2 font-mono text-sm sm:text-base">
+    <div className="flex gap-2 font-mono text-xs sm:text-sm md:text-base">
       {line.prompt && (
         <span className="text-muted-cyan shrink-0">{line.prompt}</span>
       )}
-      <span className={line.isOutput ? 'text-neon-green/80' : 'text-gray-300'}>
+      <span className={`break-all sm:break-normal ${line.isOutput ? 'text-neon-green/80' : 'text-secondary'}`}>
         {displayed}
         {!done && (
           <span className="inline-block w-2 h-4 bg-neon-green ml-0.5 animate-blink align-middle" />
@@ -95,7 +95,7 @@ export default function Hero() {
   }, [currentLine]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 pt-16">
+    <section className="relative min-h-screen flex items-center justify-center px-3 sm:px-4 pt-16">
       <div className="max-w-4xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -104,28 +104,28 @@ export default function Hero() {
           className="mb-8"
         >
           <div className="bg-card-bg border border-card-border rounded-lg overflow-hidden shadow-2xl">
-            <div className="flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-card-border">
+            <div className="flex items-center gap-2 px-4 py-3 bg-terminal-bar border-b border-card-border">
               <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
               <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
               <div className="w-3 h-3 rounded-full bg-[#28c840]" />
-              <span className="ml-2 text-xs text-gray-500 font-mono">
+              <span className="ml-2 text-xs text-dimmed font-mono">
                 cybersparky@kali:~
               </span>
             </div>
 
             <div
               ref={terminalRef}
-              className="p-4 sm:p-6 space-y-1 min-h-[200px] max-h-[300px] overflow-y-auto"
+              className="p-3 sm:p-4 md:p-6 space-y-1 min-h-[180px] sm:min-h-[200px] max-h-[300px] overflow-y-auto overflow-x-hidden"
             >
               {terminalLines.map((line, i) => {
                 if (i > currentLine) return null;
                 if (completedLines.includes(i)) {
                   return (
-                    <div key={i} className="flex gap-2 font-mono text-sm sm:text-base">
+                    <div key={i} className="flex gap-2 font-mono text-xs sm:text-sm md:text-base">
                       {line.prompt && (
                         <span className="text-muted-cyan shrink-0">{line.prompt}</span>
                       )}
-                      <span className={line.isOutput ? 'text-neon-green/80' : 'text-gray-300'}>
+                      <span className={`break-all sm:break-normal ${line.isOutput ? 'text-neon-green/80' : 'text-secondary'}`}>
                         {line.command}
                       </span>
                     </div>
@@ -152,7 +152,7 @@ export default function Hero() {
         >
           <div className="glitch-wrapper mb-4">
             <h1
-              className="glitch-text text-5xl sm:text-7xl lg:text-8xl font-bold font-mono text-white tracking-tighter"
+              className="glitch-text text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-mono text-primary tracking-tighter"
               data-text="CYBERSPARKY"
             >
               CYBERSPARKY
@@ -163,44 +163,41 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.5 }}
-            className="text-lg sm:text-xl text-gray-400 font-sans mb-8 tracking-wide"
+            className="text-lg sm:text-xl text-muted font-sans mb-8 tracking-wide"
           >
-            Breaking things.{' '}
-            <span className="text-neon-green font-semibold">Responsibly.</span>
+            Securing code.{' '}
+            <span className="text-neon-green font-semibold">Shipping safe.</span>
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2 }}
-            className="flex flex-wrap justify-center gap-4"
+            className="flex flex-wrap justify-center gap-3 sm:gap-4"
           >
             <button
               onClick={() =>
-                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+                document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })
               }
-              className="px-6 py-3 bg-neon-green/10 border border-neon-green/30 text-neon-green font-mono text-sm rounded-md hover:bg-neon-green/20 hover:border-neon-green/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,255,65,0.2)]"
+              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-neon-green/10 border border-neon-green/30 text-neon-green font-mono text-xs sm:text-sm rounded-md hover:bg-neon-green/20 hover:border-neon-green/50 transition-all duration-300"
             >
               {'>'} View My Work
             </button>
 
-            {/* TODO: Update resume link */}
             <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-3 bg-muted-cyan/10 border border-muted-cyan/30 text-muted-cyan font-mono text-sm rounded-md hover:bg-muted-cyan/20 hover:border-muted-cyan/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,180,216,0.2)]"
+              href="/resume"
+              className="px-4 py-2.5 sm:px-6 sm:py-3 bg-muted-cyan/10 border border-muted-cyan/30 text-muted-cyan font-mono text-xs sm:text-sm rounded-md hover:bg-muted-cyan/20 hover:border-muted-cyan/50 transition-all duration-300"
             >
-              {'>'} Download Resume
+              {'>'} Resume
             </a>
 
             <a
-              href="https://hackerone.com/cybersparky"
+              href="https://github.com/cyber-sparky"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-6 py-3 border border-gray-700 text-gray-400 font-mono text-sm rounded-md hover:border-gray-500 hover:text-gray-300 transition-all duration-300"
+              className="px-4 py-2.5 sm:px-6 sm:py-3 border border-card-border text-muted font-mono text-xs sm:text-sm rounded-md hover:border-dimmed hover:text-secondary transition-all duration-300"
             >
-              {'>'} HackerOne Profile
+              {'>'} GitHub
             </a>
           </motion.div>
         </motion.div>
@@ -214,7 +211,7 @@ export default function Hero() {
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-gray-600 text-2xl"
+            className="text-faint text-2xl"
           >
             ↓
           </motion.div>

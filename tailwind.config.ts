@@ -4,14 +4,22 @@ const config: Config = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        bg: '#0a0a0a',
-        'neon-green': '#00ff41',
-        'muted-cyan': '#00b4d8',
-        'card-bg': '#111111',
-        'card-border': '#1a1a1a',
+        bg: 'rgb(var(--color-bg) / <alpha-value>)',
+        'neon-green': 'rgb(var(--color-neon-green) / <alpha-value>)',
+        'muted-cyan': 'rgb(var(--color-muted-cyan) / <alpha-value>)',
+        'card-bg': 'rgb(var(--color-card-bg) / <alpha-value>)',
+        'card-border': 'rgb(var(--color-card-border) / <alpha-value>)',
+        primary: 'rgb(var(--color-primary) / <alpha-value>)',
+        secondary: 'rgb(var(--color-secondary) / <alpha-value>)',
+        muted: 'rgb(var(--color-muted) / <alpha-value>)',
+        dimmed: 'rgb(var(--color-dimmed) / <alpha-value>)',
+        faint: 'rgb(var(--color-faint) / <alpha-value>)',
+        'terminal-bar': 'rgb(var(--color-terminal-bar) / <alpha-value>)',
+        overlay: 'rgb(var(--color-overlay) / <alpha-value>)',
       },
       fontFamily: {
         mono: ['var(--font-jetbrains)', 'JetBrains Mono', 'Fira Code', 'monospace'],
@@ -28,8 +36,8 @@ const config: Config = {
           '50%': { opacity: '0' },
         },
         'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 5px rgba(0, 255, 65, 0.3)' },
-          '50%': { boxShadow: '0 0 20px rgba(0, 255, 65, 0.6), 0 0 40px rgba(0, 255, 65, 0.2)' },
+          '0%, 100%': { boxShadow: '0 0 5px rgb(var(--color-neon-green) / 0.3)' },
+          '50%': { boxShadow: '0 0 20px rgb(var(--color-neon-green) / 0.6), 0 0 40px rgb(var(--color-neon-green) / 0.2)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },

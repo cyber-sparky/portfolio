@@ -3,9 +3,9 @@ import Navbar from '@/app/components/Navbar';
 import Hero from '@/app/components/Hero';
 import About from '@/app/components/About';
 import Skills from '@/app/components/Skills';
-import Projects from '@/app/components/Projects';
-import HallOfFame from '@/app/components/HallOfFame';
-import Blog from '@/app/components/Blog';
+// import Projects from '@/app/components/Projects';    // TODO: Uncomment when ready
+// import HallOfFame from '@/app/components/HallOfFame'; // TODO: Uncomment when ready
+// import Blog from '@/app/components/Blog';             // TODO: Uncomment when ready
 import Contact from '@/app/components/Contact';
 
 const MatrixRain = dynamic(() => import('@/app/components/MatrixRain'), {
@@ -21,9 +21,9 @@ export default function Home() {
         <Hero />
         <About />
         <Skills />
-        <Projects />
-        <HallOfFame />
-        <Blog />
+        {/* <Projects /> */}
+        {/* <HallOfFame /> */}
+        {/* <Blog /> */}
         <Contact />
       </main>
     </>

@@ -30,11 +30,21 @@ export default function MatrixRain() {
     const columns = Math.floor(canvas.width / fontSize);
     const drops: number[] = Array(columns).fill(1);
 
+    const getColors = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      return {
+        bg: isDark ? 'rgba(10, 10, 10, 0.05)' : 'rgba(245, 245, 245, 0.05)',
+        text: isDark ? 'rgba(0, 255, 65, 0.15)' : 'rgba(22, 163, 74, 0.08)',
+      };
+    };
+
     const draw = () => {
-      ctx.fillStyle = 'rgba(10, 10, 10, 0.05)';
+      const colors = getColors();
+
+      ctx.fillStyle = colors.bg;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = 'rgba(0, 255, 65, 0.15)';
+      ctx.fillStyle = colors.text;
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {

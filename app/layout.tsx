@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Outfit } from 'next/font/google';
+import ThemeProvider from '@/app/components/ThemeProvider';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -15,30 +16,30 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'cybersparky_ | Security Engineer & Bug Bounty Hunter',
+  title: 'cybersparky_ | Security Engineer',
   description:
-    'Portfolio of cybersparky — security engineer and bug bounty hunter specializing in web application security, recon automation, and vulnerability research.',
+    'Portfolio of Pranaw Murugeasan — security engineer specializing in application security, DevSecOps, and building secure CI/CD pipelines.',
   keywords: [
     'security engineer',
-    'bug bounty hunter',
-    'penetration testing',
-    'web security',
-    'vulnerability research',
-    'recon automation',
+    'application security',
+    'DevSecOps',
+    'SAST',
+    'SCA',
+    'container security',
     'cybersparky',
   ],
-  authors: [{ name: 'cybersparky' }],
+  authors: [{ name: 'Pranaw Murugeasan' }],
   openGraph: {
-    title: 'cybersparky_ | Security Engineer & Bug Bounty Hunter',
+    title: 'cybersparky_ | Security Engineer',
     description:
-      'Breaking things. Responsibly. Security engineer portfolio showcasing bug bounty findings, tools, and expertise.',
+      'Securing code. Shipping safe. Security engineer portfolio showcasing AppSec expertise and tooling.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'cybersparky_ | Security Engineer & Bug Bounty Hunter',
-    description: 'Breaking things. Responsibly.',
+    title: 'cybersparky_ | Security Engineer',
+    description: 'Securing code. Shipping safe.',
   },
   robots: {
     index: true,
@@ -46,14 +47,27 @@ export const metadata: Metadata = {
   },
 };
 
+const themeScript = `
+(function(){
+  var t = localStorage.getItem('theme');
+  if (t === 'light') { document.documentElement.classList.remove('dark'); }
+  else { document.documentElement.classList.add('dark'); }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${outfit.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="en" className={`dark ${jetbrainsMono.variable} ${outfit.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <body className="font-sans antialiased transition-colors duration-300">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
