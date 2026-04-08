@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 
-const USER = 'mdpranaw';
-const DOMAIN = 'gmail.com';
+const USER = 'hello';
+const DOMAIN = 'cybersparky.in';
 
 export function useDecodedEmail() {
   const [email, setEmail] = useState('');

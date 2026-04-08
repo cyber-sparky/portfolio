@@ -1,7 +1,7 @@
 # If you discover a security vulnerability, please report it responsibly.
 # https://securitytxt.org/
 
-Contact: mailto:mdpranaw@gmail.com
+Contact: mailto:hello@cybersparky.in
 Expires: 2027-04-08T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://cybersparky.in/.well-known/security.txt
