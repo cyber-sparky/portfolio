@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { FiSearch, FiX } from 'react-icons/fi';
 import ThemeToggle from '@/app/components/ThemeToggle';
 import { writeups, categoryColors, difficultyColors } from '@/app/data/writeups';
 import type { Writeup } from '@/app/data/writeups';
@@ -18,13 +19,59 @@ const categories: Array<Writeup['category'] | 'all'> = [
   'misc',
 ];
 
+const MAX_QUERY_LENGTH = 100;
+
+function sanitizeQuery(raw: string): string {
+  return raw.replace(/[<>"'&]/g, '').slice(0, MAX_QUERY_LENGTH);
+}
+
+function matchesSearch(writeup: Writeup, query: string): boolean {
+  const q = query.toLowerCase();
+  return (
+    writeup.title.toLowerCase().includes(q) ||
+    writeup.ctfName.toLowerCase().includes(q) ||
+    writeup.description.toLowerCase().includes(q) ||
+    writeup.category.toLowerCase().includes(q) ||
+    writeup.tags.some((t) => t.toLowerCase().includes(q))
+  );
+}
+
 export default function WriteupsPage() {
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  const filtered =
-    activeCategory === 'all'
-      ? writeups
-      : writeups.filter((w) => w.category === activeCategory);
+  useEffect(() => {
+    if (searchOpen && searchRef.current) searchRef.current.focus();
+  }, [searchOpen]);
+
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+      if (e.key === 'Escape') {
+        setSearchOpen(false);
+        setSearchQuery('');
+      }
+    }
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
+  const filtered = useMemo(() => {
+    let result = writeups;
+    if (activeCategory !== 'all') {
+      result = result.filter((w) => w.category === activeCategory);
+    }
+    const q = sanitizeQuery(searchQuery).trim();
+    if (q.length > 0) {
+      result = result.filter((w) => matchesSearch(w, q));
+    }
+    return result;
+  }, [activeCategory, searchQuery]);
 
   return (
     <div className="min-h-screen bg-bg">
@@ -38,12 +85,60 @@ export default function WriteupsPage() {
             ← back to portfolio
           </a>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-dimmed text-xs">
-              {writeups.length} writeup{writeups.length !== 1 ? 's' : ''}
+            <button
+              onClick={() => setSearchOpen((p) => !p)}
+              className="p-2 rounded-md text-dimmed hover:text-neon-green hover:bg-overlay/5 transition-all duration-200"
+              aria-label="Toggle search"
+            >
+              <FiSearch className="w-4 h-4" />
+            </button>
+            <span className="font-mono text-dimmed text-xs hidden sm:inline">
+              {filtered.length} result{filtered.length !== 1 ? 's' : ''}
             </span>
             <ThemeToggle />
           </div>
         </div>
+
+        <AnimatePresence>
+          {searchOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden border-t border-card-border"
+            >
+              <div className="max-w-5xl mx-auto px-4 py-3">
+                <div className="relative">
+                  <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-dimmed" />
+                  <input
+                    ref={searchRef}
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(sanitizeQuery(e.target.value))}
+                    placeholder="Search writeups by title, CTF, tag..."
+                    maxLength={MAX_QUERY_LENGTH}
+                    className="w-full pl-10 pr-20 py-2.5 bg-card-bg border border-card-border rounded-lg font-mono text-sm text-primary placeholder:text-faint focus:outline-none focus:border-neon-green/40 transition-colors"
+                  />
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                    {searchQuery && (
+                      <button
+                        onClick={() => setSearchQuery('')}
+                        className="text-dimmed hover:text-primary transition-colors"
+                        aria-label="Clear search"
+                      >
+                        <FiX className="w-4 h-4" />
+                      </button>
+                    )}
+                    <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-faint border border-card-border rounded bg-bg">
+                      ⌘K
+                    </kbd>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
@@ -102,9 +197,21 @@ export default function WriteupsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center py-16 text-dimmed font-mono text-sm"
+                className="text-center py-16"
               >
-                No writeups in this category yet.
+                <p className="text-dimmed font-mono text-sm mb-2">
+                  {searchQuery
+                    ? 'No writeups match your search.'
+                    : 'No writeups in this category yet.'}
+                </p>
+                {searchQuery && (
+                  <button
+                    onClick={() => { setSearchQuery(''); setActiveCategory('all'); }}
+                    className="text-xs font-mono text-neon-green/70 hover:text-neon-green transition-colors"
+                  >
+                    Clear filters
+                  </button>
+                )}
               </motion.div>
             ) : (
               filtered.map((writeup, i) => (

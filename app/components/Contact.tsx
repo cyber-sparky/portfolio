@@ -6,11 +6,11 @@ import {
   FiLinkedin,
   FiMail,
 } from 'react-icons/fi';
+import { EmailLink } from './ObfuscatedEmail';
 
 const socials = [
   { label: 'GitHub', href: 'https://github.com/cyber-sparky', icon: FiGithub },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/pranaw-m-9ab53024b/', icon: FiLinkedin },
-  { label: 'Email', href: 'mailto:mdpranaw@gmail.com', icon: FiMail },
 ];
 
 export default function Contact() {
@@ -65,6 +65,21 @@ export default function Contact() {
                   </motion.a>
                 );
               })}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.3 + socials.length * 0.05 }}
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <EmailLink className="group flex flex-col items-center gap-2 px-5 py-4 bg-overlay/5 border border-card-border rounded-lg hover:border-neon-green/30 hover:bg-neon-green/5 transition-all duration-300 min-w-[90px]">
+                  <FiMail className="w-6 h-6 text-muted group-hover:text-neon-green transition-colors" />
+                  <span className="text-xs font-mono text-dimmed group-hover:text-muted transition-colors">
+                    Email
+                  </span>
+                </EmailLink>
+              </motion.div>
             </div>
           </div>
 

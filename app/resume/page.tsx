@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import PrintButton from './PrintButton';
 import ThemeToggle from '@/app/components/ThemeToggle';
 import { domains } from '@/app/lib/domains';
+import { ResumeEmailLink } from './ResumeEmail';
 
 export const metadata: Metadata = {
   title: 'Resume — Pranaw M | Security Engineer',
@@ -61,9 +62,7 @@ export default function ResumePage() {
           <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-sm font-mono muted-print text-dimmed">
             <span>Chennai, India</span>
             <span>·</span>
-            <a href="mailto:mdpranaw@gmail.com" className="hover:text-neon-green transition-colors">
-              mdpranaw@gmail.com
-            </a>
+            <ResumeEmailLink className="hover:text-neon-green transition-colors" />
             <span>·</span>
             <a href="https://github.com/cyber-sparky" className="hover:text-neon-green transition-colors">
               github.com/cyber-sparky
