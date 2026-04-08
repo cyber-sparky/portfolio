@@ -10,7 +10,7 @@ import { EmailLink } from './ObfuscatedEmail';
 
 const socials = [
   { label: 'GitHub', href: 'https://github.com/cyber-sparky', icon: FiGithub },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/pranaw-m-9ab53024b/', icon: FiLinkedin },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/cybersparky/', icon: FiLinkedin },
 ];
 
 export default function Contact() {

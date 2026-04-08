@@ -68,8 +68,8 @@ export default function ResumePage() {
               github.com/cyber-sparky
             </a>
             <span>·</span>
-            <a href="https://www.linkedin.com/in/pranaw-m-9ab53024b/" className="hover:text-neon-green transition-colors">
-              linkedin.com/in/pranaw-m
+            <a href="https://www.linkedin.com/in/cybersparky/" className="hover:text-neon-green transition-colors">
+              linkedin.com/in/cybersparky
             </a>
           </div>
         </header>
