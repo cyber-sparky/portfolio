@@ -35,8 +35,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // blogs.cybersparky.in → rewrite to /writeups
-  if (subdomain === 'blogs') {
+  // blog.cybersparky.in → rewrite to /writeups
+  if (subdomain === 'blog') {
     const url = request.nextUrl.clone();
     if (pathname === '/') {
       url.pathname = '/writeups';
@@ -57,14 +57,14 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  // On root domain, redirect /writeups → blogs.cybersparky.in
+  // On root domain, redirect /writeups → blog.cybersparky.in
   if (
     (hostname === ROOT_DOMAIN || hostname === `www.${ROOT_DOMAIN}`) &&
     pathname.startsWith('/writeups')
   ) {
     const rest = pathname.replace('/writeups', '') || '/';
     return NextResponse.redirect(
-      new URL(`https://blogs.${ROOT_DOMAIN}${rest}`)
+      new URL(`https://blog.${ROOT_DOMAIN}${rest}`)
     );
   }
 
