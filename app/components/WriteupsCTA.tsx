@@ -18,7 +18,7 @@ export default function WriteupsCTA() {
           className="mb-10 sm:mb-14"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-primary mb-2">
-            <span className="text-muted-cyan">03.</span> ctf_writeups
+            <span className="text-muted-cyan">03.</span> blog
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-neon-green to-transparent" />
         </motion.div>
@@ -31,7 +31,7 @@ export default function WriteupsCTA() {
           className="bg-card-bg border border-card-border rounded-lg p-4 sm:p-6 mb-6"
         >
           <div className="text-xs font-mono text-dimmed mb-4">
-            $ ls ~/writeups/ --recent
+            $ ls ~/blog/ --recent
           </div>
 
           <div className="space-y-3">
@@ -97,7 +97,7 @@ export default function WriteupsCTA() {
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-neon-green/10 border border-neon-green/30 text-neon-green font-mono text-sm rounded-md hover:bg-neon-green/20 hover:border-neon-green/50 transition-all duration-300"
           >
             <span>{'>'}</span>
-            Explore all {writeups.length} writeups
+            Explore all {writeups.length} posts
           </a>
         </motion.div>
       </div>

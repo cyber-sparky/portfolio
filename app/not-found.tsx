@@ -115,7 +115,7 @@ export default function NotFound() {
                 href={domains.writeups}
                 className="px-4 py-2.5 border border-card-border text-muted font-mono text-xs sm:text-sm rounded-md hover:border-dimmed hover:text-secondary transition-all duration-300"
               >
-                {'>'} ls ~/writeups
+                {'>'} ls ~/blog
               </a>
               <a
                 href={domains.resume}

@@ -11,7 +11,7 @@ export interface Writeup {
   slug: string;
   title: string;
   ctfName: string;
-  category: 'web' | 'crypto' | 'pwn' | 'forensics' | 'reverse' | 'misc';
+  category: 'web' | 'crypto' | 'pwn' | 'forensics' | 'reverse' | 'misc' | 'android';
   difficulty: 'easy' | 'medium' | 'hard';
   date: string;
   description: string;
@@ -26,6 +26,7 @@ export const categoryColors: Record<Writeup['category'], string> = {
   pwn: 'text-red-400 border-red-400/30 bg-red-400/10',
   forensics: 'text-amber-400 border-amber-400/30 bg-amber-400/10',
   reverse: 'text-purple-400 border-purple-400/30 bg-purple-400/10',
+  android: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
   misc: 'text-dimmed border-card-border bg-overlay/5',
 };
 
@@ -36,6 +37,171 @@ export const difficultyColors: Record<Writeup['difficulty'], string> = {
 };
 
 export const writeups: Writeup[] = [
+  // ─── ANDROID / SECURITY ────────────────────────────────
+  {
+    slug: 'bypassing-device-admin-blockerhero',
+    title: 'Bypassing Device Admin Protection to Remove a Locked Application',
+    ctfName: 'Android Security',
+    category: 'android',
+    difficulty: 'easy',
+    date: '2025-04-08',
+    description:
+      'A practical walkthrough on removing an Android application that leverages Device Administrator privileges to resist uninstallation — covering ADB-based removal, Device Policy Manager manipulation, and Safe Mode recovery.',
+    tags: ['Android', 'ADB', 'Device Admin', 'DPM', 'Safe Mode', 'Mobile Security'],
+    externalUrl: 'https://play.google.com/store/apps/details?id=com.blockerhero',
+    content: [
+      {
+        type: 'info',
+        items: [
+          { label: 'Platform', value: 'Android' },
+          { label: 'Target App', value: 'BlockerHero' },
+          { label: 'Difficulty', value: 'Easy' },
+          { label: 'Category', value: 'Mobile Security' },
+        ],
+      },
+      {
+        type: 'heading',
+        value: 'Overview',
+      },
+      {
+        type: 'text',
+        value: 'Certain Android applications request Device Administrator privileges during setup, which grants them elevated control over the device — including the ability to prevent their own uninstallation. BlockerHero is one such application that utilizes this mechanism to enforce content filtering policies. This writeup documents the process of removing the application when conventional uninstallation methods are blocked by the Device Admin policy.',
+      },
+      {
+        type: 'callout',
+        variant: 'note',
+        value: 'This guide is intended strictly for educational purposes and for situations where the device owner has legitimate authority to manage installed applications. Always respect device ownership policies.',
+      },
+      {
+        type: 'heading',
+        value: 'Prerequisites — Developer Options Configuration',
+      },
+      {
+        type: 'text',
+        value: 'Before proceeding with the ADB-based approach, ensure the following Developer Options are enabled on the target device:',
+      },
+      {
+        type: 'text',
+        value: '• USB Debugging — Enables adb shell access, package management commands, and DPM operations.\n• Wireless Debugging — Alternative to USB; allows ADB connectivity over Wi-Fi.\n• Install via USB (MIUI/HyperOS devices) — Permits APK sideloading via adb install without additional prompts.\n• USB Debugging (Security settings) — Triggers RSA fingerprint authorization for the host machine on sensitive operations.\n• OEM Unlocking (optional) — Required only if bootloader unlocking is necessary for advanced scenarios such as pushing a system-level APK. Warning: unlocking the bootloader performs a full data wipe.',
+      },
+      {
+        type: 'heading',
+        value: 'Method 1 — ADB Package Removal',
+      },
+      {
+        type: 'text',
+        value: 'Connect the device via USB, authorize the ADB session, and attempt a standard package uninstallation.',
+      },
+      {
+        type: 'heading',
+        value: 'Step 1: Standard Uninstallation Attempt',
+      },
+      {
+        type: 'code',
+        language: 'bash',
+        value: '# Verify device connectivity\nadb devices\n\n# Open an interactive shell on the device\nadb shell\n\n# Locate the target package\npm list packages | grep blockerhero\n\n# Attempt standard uninstallation\npm uninstall com.blockerhero',
+      },
+      {
+        type: 'callout',
+        variant: 'tip',
+        value: 'If the standard pm uninstall command succeeds, no further action is required. The following steps address scenarios where the app resists removal.',
+      },
+      {
+        type: 'heading',
+        value: 'Step 2: Per-User Package Removal',
+      },
+      {
+        type: 'text',
+        value: 'If the standard uninstall fails (common when the app has system-level or admin-level protection), attempt removing it for the primary user profile only.',
+      },
+      {
+        type: 'code',
+        language: 'bash',
+        value: '# Remove the package for user 0 (primary user profile)\npm uninstall --user 0 com.blockerhero',
+      },
+      {
+        type: 'heading',
+        value: 'Step 3: Device Policy Manager (DPM) Bypass',
+      },
+      {
+        type: 'text',
+        value: 'When an application registers itself as a Device Administrator, Android\'s Device Policy Manager (DPM) enforces restrictions that prevent standard uninstallation. The admin component must be deactivated before removal is possible.',
+      },
+      {
+        type: 'code',
+        language: 'bash',
+        value: '# Identify the active admin receiver for BlockerHero\ndumpsys device_policy | grep blockerhero\n# Output: com.blockerhero/.MyDeviceAdminReceiver\n\n# Revoke Device Admin privileges\ndpm remove-active-admin com.blockerhero/.MyDeviceAdminReceiver\n\n# Proceed with package removal\npm uninstall --user 0 com.blockerhero',
+      },
+      {
+        type: 'callout',
+        variant: 'warning',
+        value: 'The admin receiver class name (e.g., .MyDeviceAdminReceiver vs .DeviceAdminReceiver) may vary between app versions. Always verify the exact receiver name via the dumpsys output before executing the dpm command.',
+      },
+      {
+        type: 'heading',
+        value: 'Method 2 — Safe Mode Recovery',
+      },
+      {
+        type: 'text',
+        value: 'If ADB-based methods fail or are not feasible, Safe Mode provides a reliable fallback. Safe Mode temporarily disables all third-party applications, allowing you to modify their permissions without interference.',
+      },
+      {
+        type: 'text',
+        value: '1. Boot into Safe Mode — Press and hold the power button, then long-press the "Power Off" option until the Safe Mode prompt appears. Confirm the reboot.\n2. Navigate to Settings → Apps → BlockerHero.\n3. Revoke Device Administrator access (the option will now be accessible since the app is disabled in Safe Mode).\n4. Uninstall the application normally.\n5. Reboot the device — it will return to Normal Mode without the application.',
+      },
+      {
+        type: 'heading',
+        value: 'Method 3 — ADB over Wi-Fi (Wireless Debugging)',
+      },
+      {
+        type: 'text',
+        value: 'For situations where a USB cable is unavailable, ADB commands can be executed wirelessly. Ensure both the host machine and the Android device are connected to the same network.',
+      },
+      {
+        type: 'code',
+        language: 'bash',
+        value: '# Enable Wireless Debugging on the device and note the IP:port\n# Pair the host with the device (one-time setup)\nadb pair <ip>:<pairing_port>\n# Enter the pairing code displayed on the device\n\n# Connect to the device\nadb connect <ip>:<port>\n\n# Proceed with Method 1 commands\nadb shell\ndpm remove-active-admin com.blockerhero/.MyDeviceAdminReceiver\npm uninstall --user 0 com.blockerhero',
+      },
+      {
+        type: 'heading',
+        value: 'Method 4 — Factory Reset as a Last Resort',
+      },
+      {
+        type: 'text',
+        value: 'If all previous methods fail — which can occur on heavily restricted devices with custom MDM configurations — a factory reset will remove all third-party applications and their associated policies.',
+      },
+      {
+        type: 'callout',
+        variant: 'warning',
+        value: 'A factory reset performs a complete data wipe. Ensure all critical data is backed up before proceeding. Navigate to Settings → System → Reset options → Erase all data (factory reset).',
+      },
+      {
+        type: 'heading',
+        value: 'Technical Analysis — Why Device Admin Blocks Uninstallation',
+      },
+      {
+        type: 'text',
+        value: 'When BlockerHero is granted Device Administrator access, Android creates a policy entry in its DevicePolicyManager subsystem (stored internally at /data/system/device_policies.xml). This policy registration instructs the OS to prevent any user-initiated uninstallation, disable commands, or force-stop operations against the protected package. The application essentially becomes tamper-resistant at the framework level.',
+      },
+      {
+        type: 'text',
+        value: 'Safe Mode circumvents this by temporarily disabling all third-party application code at boot time. Since BlockerHero\'s admin receiver is inactive in Safe Mode, the Settings interface allows revoking its Device Admin status — after which standard uninstallation proceeds normally.',
+      },
+      {
+        type: 'text',
+        value: 'The ADB approach works because the shell user (when USB Debugging security settings are authorized) has sufficient privileges to invoke the dpm remove-active-admin API directly, bypassing the UI-level restrictions that the Device Admin policy enforces.',
+      },
+      {
+        type: 'heading',
+        value: 'Conclusion',
+      },
+      {
+        type: 'text',
+        value: 'Device Administrator APIs are a legitimate Android framework feature designed for enterprise device management (MDM). However, consumer applications sometimes leverage this mechanism to resist uninstallation. Understanding the underlying DPM architecture enables straightforward remediation through ADB commands or Safe Mode recovery — no root access or bootloader modifications required.',
+      },
+    ],
+  },
+
   // ─── PWNTILLDAWN ───────────────────────────────────────
   {
     slug: 'pwndrive',

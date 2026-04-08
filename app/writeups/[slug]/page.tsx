@@ -16,7 +16,7 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }: { params: { slug: string } }) {
   const writeup = writeups.find((w) => w.slug === params.slug);
-  if (!writeup) return { title: 'Writeup Not Found' };
+  if (!writeup) return { title: 'Post Not Found' };
   return {
     title: `${writeup.title} — ${writeup.ctfName} | cybersparky_`,
     description: writeup.description,
@@ -193,7 +193,7 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
             href={domains.writeups}
             className="font-mono text-neon-green text-sm hover:text-glow transition-all"
           >
-            ← all writeups
+            ← all posts
           </a>
           <div className="flex items-center gap-2">
             {writeup.externalUrl && (
@@ -270,7 +270,7 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
             href={domains.writeups}
             className="inline-flex items-center gap-2 text-sm font-mono text-muted hover:text-neon-green transition-colors"
           >
-            ← Back to all writeups
+            ← Back to all posts
           </a>
         </div>
       </article>

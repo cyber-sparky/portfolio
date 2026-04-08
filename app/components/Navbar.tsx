@@ -83,7 +83,7 @@ export default function Navbar() {
               href={domains.writeups}
               className="px-3 py-2 text-sm font-mono rounded-md transition-all duration-200 text-muted hover:text-neon-green hover:bg-overlay/5"
             >
-              Writeups
+              Blog
             </a>
 
             <a
@@ -166,7 +166,7 @@ export default function Navbar() {
                   className="block w-full text-left px-4 py-3 text-sm font-mono rounded-md transition-all text-muted hover:text-neon-green hover:bg-overlay/5"
                 >
                   <span className="text-muted-cyan mr-2">$</span>
-                  Writeups
+                  Blog
                 </a>
               </motion.div>
               <motion.div

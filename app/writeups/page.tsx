@@ -16,6 +16,7 @@ const categories: Array<Writeup['category'] | 'all'> = [
   'pwn',
   'forensics',
   'reverse',
+  'android',
   'misc',
 ];
 
@@ -116,7 +117,7 @@ export default function WriteupsPage() {
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(sanitizeQuery(e.target.value))}
-                    placeholder="Search writeups by title, CTF, tag..."
+                    placeholder="Search by title, category, tag..."
                     maxLength={MAX_QUERY_LENGTH}
                     className="w-full pl-10 pr-20 py-2.5 bg-card-bg border border-card-border rounded-lg font-mono text-sm text-primary placeholder:text-faint focus:outline-none focus:border-neon-green/40 transition-colors"
                   />
@@ -150,11 +151,11 @@ export default function WriteupsPage() {
           className="mb-10 sm:mb-14"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-mono text-primary mb-3 tracking-tight">
-            <span className="text-neon-green">$</span> ctf_writeups
+            <span className="text-neon-green">$</span> blog
           </h1>
           <p className="text-muted font-sans text-sm sm:text-base max-w-xl">
-            Detailed walkthroughs of CTF challenges I&apos;ve solved — covering web exploitation,
-            cryptography, binary analysis, and more.
+            CTF writeups, security research, and technical deep-dives — covering web exploitation,
+            mobile security, cryptography, and more.
           </p>
         </motion.div>
 
@@ -201,8 +202,8 @@ export default function WriteupsPage() {
               >
                 <p className="text-dimmed font-mono text-sm mb-2">
                   {searchQuery
-                    ? 'No writeups match your search.'
-                    : 'No writeups in this category yet.'}
+                    ? 'No posts match your search.'
+                    : 'No posts in this category yet.'}
                 </p>
                 {searchQuery && (
                   <button
@@ -269,7 +270,7 @@ export default function WriteupsPage() {
 
                       <div className="mt-4 pt-3 border-t border-card-border flex items-center justify-between">
                         <span className="text-xs font-mono text-faint group-hover:text-neon-green transition-colors">
-                          Read writeup →
+                          Read more →
                         </span>
                       </div>
                     </div>
