@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
 import { writeups, categoryColors, difficultyColors } from '@/app/data/writeups';
+import { domains, writeupUrl } from '@/app/lib/domains';
 
 export default function WriteupsCTA() {
   const recent = writeups.slice(0, 3);
@@ -43,8 +43,8 @@ export default function WriteupsCTA() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.3, delay: 0.25 + i * 0.08 }}
               >
-                <Link
-                  href={`/writeups/${w.slug}`}
+                <a
+                  href={writeupUrl(w.slug)}
                   className="group flex items-center gap-3 sm:gap-4 p-3 rounded-md hover:bg-overlay/5 transition-all duration-200"
                 >
                   <span className="text-neon-green/40 font-mono text-xs shrink-0">
@@ -79,7 +79,7 @@ export default function WriteupsCTA() {
                   <span className="text-faint group-hover:text-neon-green text-xs font-mono shrink-0 hidden sm:block transition-colors">
                     →
                   </span>
-                </Link>
+                </a>
               </motion.div>
             ))}
           </div>
@@ -92,13 +92,13 @@ export default function WriteupsCTA() {
           transition={{ duration: 0.4, delay: 0.5 }}
           className="text-center"
         >
-          <Link
-            href="/writeups"
+          <a
+            href={domains.writeups}
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-neon-green/10 border border-neon-green/30 text-neon-green font-mono text-sm rounded-md hover:bg-neon-green/20 hover:border-neon-green/50 transition-all duration-300"
           >
             <span>{'>'}</span>
             Explore all {writeups.length} writeups
-          </Link>
+          </a>
         </motion.div>
       </div>
     </section>

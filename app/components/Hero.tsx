@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { domains } from '@/app/lib/domains';
 
 const terminalLines = [
   { prompt: '~$', command: 'whoami', delay: 500 },
@@ -185,7 +186,7 @@ export default function Hero() {
             </button>
 
             <a
-              href="/resume"
+              href={domains.resume}
               className="px-4 py-2.5 sm:px-6 sm:py-3 bg-muted-cyan/10 border border-muted-cyan/30 text-muted-cyan font-mono text-xs sm:text-sm rounded-md hover:bg-muted-cyan/20 hover:border-muted-cyan/50 transition-all duration-300"
             >
               {'>'} Resume

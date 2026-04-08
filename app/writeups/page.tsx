@@ -6,6 +6,7 @@ import Link from 'next/link';
 import ThemeToggle from '@/app/components/ThemeToggle';
 import { writeups, categoryColors, difficultyColors } from '@/app/data/writeups';
 import type { Writeup } from '@/app/data/writeups';
+import { domains, writeupUrl } from '@/app/lib/domains';
 
 const categories: Array<Writeup['category'] | 'all'> = [
   'all',
@@ -30,12 +31,12 @@ export default function WriteupsPage() {
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-bg/90 backdrop-blur-xl border-b border-card-border">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link
-            href="/"
+          <a
+            href={domains.home || '/'}
             className="font-mono text-neon-green text-sm hover:text-glow transition-all"
           >
             ← back to portfolio
-          </Link>
+          </a>
           <div className="flex items-center gap-2">
             <span className="font-mono text-dimmed text-xs">
               {writeups.length} writeup{writeups.length !== 1 ? 's' : ''}
@@ -114,7 +115,7 @@ export default function WriteupsPage() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3, delay: i * 0.05 }}
                 >
-                  <Link href={`/writeups/${writeup.slug}`}>
+                  <Link href={writeupUrl(writeup.slug)}>
                     <div className="group bg-card-bg border border-card-border rounded-lg p-5 sm:p-6 hover:border-neon-green/30 transition-all duration-300 cursor-pointer">
                       <div className="flex flex-wrap items-center gap-2 mb-3">
                         <span

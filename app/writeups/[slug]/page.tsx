@@ -8,6 +8,7 @@ import {
   difficultyColors,
 } from '@/app/data/writeups';
 import type { ContentBlock } from '@/app/data/writeups';
+import { domains } from '@/app/lib/domains';
 
 export function generateStaticParams() {
   return writeups.map((w) => ({ slug: w.slug }));
@@ -188,12 +189,12 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
       {/* Top bar */}
       <div className="sticky top-0 z-50 bg-bg/90 backdrop-blur-xl border-b border-card-border">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link
-            href="/writeups"
+          <a
+            href={domains.writeups}
             className="font-mono text-neon-green text-sm hover:text-glow transition-all"
           >
             ← all writeups
-          </Link>
+          </a>
           <div className="flex items-center gap-2">
             {writeup.externalUrl && (
               <a
@@ -265,12 +266,12 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
 
         {/* Footer nav */}
         <div className="mt-16 pt-8 border-t border-card-border">
-          <Link
-            href="/writeups"
+          <a
+            href={domains.writeups}
             className="inline-flex items-center gap-2 text-sm font-mono text-muted hover:text-neon-green transition-colors"
           >
             ← Back to all writeups
-          </Link>
+          </a>
         </div>
       </article>
     </div>

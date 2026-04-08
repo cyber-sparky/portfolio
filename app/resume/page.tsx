@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import PrintButton from './PrintButton';
 import ThemeToggle from '@/app/components/ThemeToggle';
+import { domains } from '@/app/lib/domains';
 
 export const metadata: Metadata = {
   title: 'Resume — Pranaw M | Security Engineer',
@@ -34,7 +35,7 @@ export default function ResumePage() {
       <div className="no-print sticky top-0 z-50 bg-bg/90 backdrop-blur-xl border-b border-card-border">
         <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <a
-            href="/"
+            href={domains.home || '/'}
             className="font-mono text-neon-green text-sm hover:text-glow transition-all"
           >
             ← back to portfolio
