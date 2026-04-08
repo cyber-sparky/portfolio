@@ -3,8 +3,8 @@ import PrintButton from './PrintButton';
 import ThemeToggle from '@/app/components/ThemeToggle';
 
 export const metadata: Metadata = {
-  title: 'Resume — Pranaw Murugeasan | Security Engineer',
-  description: 'Resume of Pranaw Murugeasan, Security Engineer at Freshworks.',
+  title: 'Resume — Pranaw M | Security Engineer',
+  description: 'Resume of Pranaw M, Security Engineer at Freshworks.',
 };
 
 export default function ResumePage() {
@@ -52,7 +52,7 @@ export default function ResumePage() {
         {/* Header */}
         <header className="mb-8 sm:mb-10">
           <h1 className="text-3xl sm:text-4xl font-bold font-mono text-primary tracking-tight">
-            Pranaw Murugeasan
+            Pranaw M
           </h1>
           <p className="accent text-neon-green font-mono text-base sm:text-lg mt-1">
             Security Engineer

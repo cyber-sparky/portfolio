@@ -18,7 +18,7 @@ const outfit = Outfit({
 export const metadata: Metadata = {
   title: 'cybersparky_ | Security Engineer',
   description:
-    'Portfolio of Pranaw Murugeasan — security engineer specializing in application security, DevSecOps, and building secure CI/CD pipelines.',
+    'Portfolio of Pranaw M — security engineer specializing in application security, DevSecOps, and building secure CI/CD pipelines.',
   keywords: [
     'security engineer',
     'application security',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     'container security',
     'cybersparky',
   ],
-  authors: [{ name: 'Pranaw Murugeasan' }],
+  authors: [{ name: 'Pranaw M' }],
   openGraph: {
     title: 'cybersparky_ | Security Engineer',
     description:
