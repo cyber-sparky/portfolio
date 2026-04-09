@@ -190,27 +190,45 @@ export default function ResumePage() {
           <h2 className="accent text-neon-green font-mono text-sm font-bold uppercase tracking-widest mb-5">
             Certifications
           </h2>
-          <div className="space-y-2.5 text-sm font-sans">
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-              <div>
-                <span className="text-primary font-semibold">Certified AI Security Professional (CAISP)</span>
-                <span className="muted-print text-dimmed"> — Practical DevSecOps</span>
+          <div className="space-y-5 text-sm font-sans">
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+                <div>
+                  <span className="text-primary font-semibold">Certified AI Security Professional (CAISP)</span>
+                  <span className="muted-print text-dimmed"> — Practical DevSecOps</span>
+                </div>
+                <span className="muted-print text-dimmed font-mono text-xs shrink-0">Sep 2025</span>
               </div>
-              <span className="muted-print text-dimmed font-mono text-xs shrink-0">Sep 2025</span>
+              <p className="text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
+                Industry-recognized credential validating expertise in securing AI/ML systems — covering adversarial machine learning,
+                LLM security risks, AI supply chain threats, and secure ML pipeline architecture.
+              </p>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-              <div>
-                <span className="text-primary font-semibold">Certified DevSecOps Professional (CDP)</span>
-                <span className="muted-print text-dimmed"> — Practical DevSecOps</span>
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+                <div>
+                  <span className="text-primary font-semibold">Certified DevSecOps Professional (CDP)</span>
+                  <span className="muted-print text-dimmed"> — Practical DevSecOps</span>
+                </div>
+                <span className="muted-print text-dimmed font-mono text-xs shrink-0">Apr 2025</span>
               </div>
-              <span className="muted-print text-dimmed font-mono text-xs shrink-0">Apr 2025</span>
+              <p className="text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
+                Hands-on certification demonstrating proficiency in embedding security into CI/CD pipelines — including
+                SAST, DAST, SCA, infrastructure-as-code scanning, container hardening, and compliance-as-code practices.
+              </p>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-              <div>
-                <span className="text-primary font-semibold">Google Cybersecurity Certificate</span>
-                <span className="muted-print text-dimmed"> — Google / Coursera</span>
+            <div>
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+                <div>
+                  <span className="text-primary font-semibold">Google Cybersecurity Certificate</span>
+                  <span className="muted-print text-dimmed"> — Google / Coursera</span>
+                </div>
+                <span className="muted-print text-dimmed font-mono text-xs shrink-0">Jan 2024</span>
               </div>
-              <span className="muted-print text-dimmed font-mono text-xs shrink-0">Jan 2024</span>
+              <p className="text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
+                Google&apos;s professional-level cybersecurity program covering network defense, incident detection and response,
+                SIEM tooling (Splunk, Chronicle), Linux system administration, and Python-based security automation.
+              </p>
             </div>
           </div>
         </section>

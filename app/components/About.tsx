@@ -114,26 +114,63 @@ export default function About() {
           className="mt-10 sm:mt-14"
         >
           <div className="bg-card-bg border border-card-border rounded-lg p-4 sm:p-6 font-mono text-sm">
-            <div className="text-dimmed text-xs mb-4">$ ls ~/certs/</div>
-            <div className="grid sm:grid-cols-3 gap-3 sm:gap-4">
+            <div className="text-dimmed text-xs mb-5">$ ls ~/certs/ --verbose</div>
+            <div className="grid gap-4 sm:gap-5">
               {[
-                { name: 'CAISP', full: 'Certified AI Security Professional', issuer: 'Practical DevSecOps' },
-                { name: 'CDP', full: 'Certified DevSecOps Professional', issuer: 'Practical DevSecOps' },
-                { name: 'GCC', full: 'Google Cybersecurity Certificate', issuer: 'Google' },
+                {
+                  name: 'CAISP',
+                  full: 'Certified AI Security Professional',
+                  issuer: 'Practical DevSecOps',
+                  date: 'Sep 2025',
+                  desc: 'Industry-recognized certification covering adversarial ML, LLM security, AI supply chain risks, and secure AI/ML pipeline design — validating expertise in securing AI-driven systems at scale.',
+                  tags: ['AI/ML Security', 'LLM Threats', 'Adversarial ML'],
+                },
+                {
+                  name: 'CDP',
+                  full: 'Certified DevSecOps Professional',
+                  issuer: 'Practical DevSecOps',
+                  date: 'Apr 2025',
+                  desc: 'Hands-on certification focused on embedding security into CI/CD pipelines — covering SAST, DAST, SCA, IaC scanning, container security, and compliance-as-code in real-world DevOps environments.',
+                  tags: ['CI/CD Security', 'SAST/SCA', 'Container Hardening'],
+                },
+                {
+                  name: 'GCC',
+                  full: 'Google Cybersecurity Certificate',
+                  issuer: 'Google',
+                  date: 'Jan 2024',
+                  desc: 'Google\'s professional-level cybersecurity program covering network security, incident response, SIEM tooling (Splunk, Chronicle), Linux administration, and Python automation for security operations.',
+                  tags: ['SIEM', 'Incident Response', 'Network Security'],
+                },
               ].map((cert) => (
                 <div
                   key={cert.name}
-                  className="group p-3 sm:p-4 border border-card-border rounded-md hover:border-neon-green/30 hover:bg-neon-green/5 transition-all duration-300"
+                  className="group p-4 sm:p-5 border border-card-border rounded-lg hover:border-neon-green/30 hover:bg-neon-green/5 transition-all duration-300"
                 >
-                  <span className="text-neon-green font-bold text-base group-hover:text-glow transition-all">
-                    {cert.name}
-                  </span>
-                  <p className="text-muted text-xs mt-1.5 leading-relaxed font-sans">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className="text-neon-green font-bold text-base sm:text-lg group-hover:text-glow transition-all">
+                      {cert.name}
+                    </span>
+                    <span className="text-faint text-[10px] sm:text-xs ml-auto">{cert.date}</span>
+                  </div>
+                  <p className="text-primary text-xs sm:text-sm font-sans font-medium">
                     {cert.full}
                   </p>
-                  <p className="text-faint text-xs mt-1">
-                    ↳ {cert.issuer}
+                  <p className="text-faint text-xs mt-0.5 font-sans">
+                    Issued by {cert.issuer}
                   </p>
+                  <p className="text-muted text-xs sm:text-sm mt-2.5 leading-relaxed font-sans">
+                    {cert.desc}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {cert.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 text-[10px] font-mono text-dimmed bg-overlay/5 rounded border border-card-border"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               ))}
             </div>
