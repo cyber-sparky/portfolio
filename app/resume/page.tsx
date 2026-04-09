@@ -14,8 +14,9 @@ export default function ResumePage() {
     <div className="min-h-screen bg-bg text-secondary">
       {/* Print-only styles */}
       <style>{`
+        @page { margin: 0; }
         @media print {
-          body { background: #fff !important; color: #111 !important; }
+          body { background: #fff !important; color: #111 !important; margin: 0 !important; padding: 10mm 15mm !important; }
           .no-print { display: none !important; }
           .print-page { 
             background: #fff !important; 
