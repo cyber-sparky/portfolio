@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
 import ThemeToggle from '@/app/components/ThemeToggle';
 import {
   writeups,
@@ -11,6 +9,11 @@ import {
 import type { ContentBlock } from '@/app/data/writeups';
 import { domains, absoluteWriteupUrl } from '@/app/lib/domains';
 import ShareButtons from './ShareButtons';
+import StickyTOC from './StickyTOC';
+import RelatedPosts from './RelatedPosts';
+import { readingTime } from '@/app/lib/readingTime';
+import CopyCodeButton from './CopyCodeButton';
+import LightboxImage, { LightboxProvider } from './ImageLightbox';
 
 export function generateStaticParams() {
   return writeups.map((w) => ({ slug: w.slug }));
@@ -54,41 +57,23 @@ export function generateMetadata({
   };
 }
 
-function TableOfContents({ blocks }: { blocks: ContentBlock[] }) {
-  const headings = blocks
+function extractHeadings(blocks: ContentBlock[]): string[] {
+  return blocks
     .filter((b): b is ContentBlock & { type: 'heading' } => b.type === 'heading')
     .map((b) => b.value);
+}
 
-  if (headings.length < 2) return null;
-
-  return (
-    <nav
-      className="mb-10 p-5 bg-card-bg border border-card-border rounded-lg"
-      aria-label="Table of contents"
-    >
-      <div className="text-xs font-mono text-dimmed uppercase tracking-widest mb-3">
-        Table of Contents
-      </div>
-      <ol className="space-y-1.5">
-        {headings.map((h, i) => (
-          <li key={i} className="flex gap-2 text-sm font-mono">
-            <span className="text-neon-green/50 shrink-0">
-              {String(i + 1).padStart(2, '0')}.
-            </span>
-            <a
-              href={`#${h.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-              className="text-muted hover:text-neon-green transition-colors"
-            >
-              {h}
-            </a>
-          </li>
-        ))}
-      </ol>
-    </nav>
-  );
+function extractImages(
+  blocks: ContentBlock[]
+): Array<{ src: string; alt: string }> {
+  return blocks
+    .filter((b): b is ContentBlock & { type: 'image' } => b.type === 'image')
+    .map((b) => ({ src: b.src, alt: b.alt }));
 }
 
 function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
+  // Track image indices so each LightboxImage gets a stable position in the gallery.
+  let imageIndex = -1;
   return (
     <div className="space-y-5">
       {blocks.map((block, i) => {
@@ -117,6 +102,7 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
                   <span className="text-[10px] font-mono text-dimmed uppercase tracking-wider">
                     {block.language}
                   </span>
+                  <CopyCodeButton code={block.value} />
                 </div>
                 <pre className="p-4 bg-card-bg overflow-x-auto">
                   <code className="text-xs sm:text-sm font-mono text-secondary whitespace-pre">
@@ -139,19 +125,15 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
                 </code>
               </div>
             );
-          case 'image':
+          case 'image': {
+            imageIndex += 1;
             return (
               <figure key={i} className="my-6">
-                <div className="rounded-lg overflow-hidden border border-card-border bg-card-bg">
-                  <Image
-                    src={block.src}
-                    alt={block.alt}
-                    width={900}
-                    height={500}
-                    className="w-full h-auto"
-                    quality={85}
-                  />
-                </div>
+                <LightboxImage
+                  src={block.src}
+                  alt={block.alt}
+                  index={imageIndex}
+                />
                 {block.alt && (
                   <figcaption className="mt-2 text-xs font-mono text-dimmed text-center">
                     {block.alt}
@@ -159,6 +141,7 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
                 )}
               </figure>
             );
+          }
           case 'info':
             return (
               <div
@@ -245,7 +228,7 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
         </div>
       </div>
 
-      <article id="main" className="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
+      <article id="main" className="max-w-6xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
         {/* Meta */}
         <header className="mb-10">
           <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -263,6 +246,10 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
             </span>
             <span className="text-faint text-xs font-mono">
               {writeup.date}
+            </span>
+            <span aria-hidden="true" className="text-faint text-xs">·</span>
+            <span className="text-faint text-xs font-mono">
+              {readingTime(writeup.content).minutes} min read
             </span>
           </div>
 
@@ -292,17 +279,27 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
 
         <hr className="border-card-border mb-10" />
 
-        {/* Table of Contents */}
-        <TableOfContents blocks={writeup.content} />
+        {/* Two-column layout: content + sticky TOC sidebar on lg+ */}
+        <LightboxProvider images={extractImages(writeup.content)}>
+          <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_240px] lg:gap-10 lg:items-start">
+            <aside className="lg:order-2">
+              <StickyTOC headings={extractHeadings(writeup.content)} />
+            </aside>
 
-        {/* Content */}
-        <ContentRenderer blocks={writeup.content} />
+            <div className="lg:order-1 min-w-0">
+              <ContentRenderer blocks={writeup.content} />
+            </div>
+          </div>
+        </LightboxProvider>
 
         {/* Share buttons */}
         <ShareButtons
           title={`${writeup.title} — ${writeup.ctfName}`}
           url={absoluteWriteupUrl(writeup.slug)}
         />
+
+        {/* Related posts */}
+        <RelatedPosts current={writeup} />
 
         {/* Footer nav */}
         <div className="mt-12 pt-8 border-t border-card-border">

@@ -97,6 +97,15 @@ export default function Navbar() {
               Resume
             </a>
 
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent('open-command-palette'))}
+              aria-label="Open command palette"
+              className="ml-2 hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-mono rounded-md border border-card-border text-dimmed hover:text-neon-green hover:border-neon-green/30 transition-all duration-200"
+            >
+              <span aria-hidden="true">⌘</span>
+              <span>K</span>
+            </button>
+
             <div className="ml-2">
               <ThemeToggle />
             </div>

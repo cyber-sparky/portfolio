@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Outfit } from 'next/font/google';
 import ThemeProvider from '@/app/components/ThemeProvider';
+import ScrollProgress from '@/app/components/ScrollProgress';
+import CommandPalette from '@/app/components/CommandPalette';
 import { absoluteUrls } from '@/app/lib/domains';
 import './globals.css';
 
@@ -97,14 +99,18 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="font-sans antialiased transition-colors duration-300">
+      <body className="font-sans transition-colors duration-300">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-neon-green focus:text-bg focus:font-mono focus:text-sm focus:rounded-md"
         >
           Skip to content
         </a>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <ScrollProgress />
+          <CommandPalette />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

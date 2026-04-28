@@ -8,6 +8,7 @@ import ThemeToggle from '@/app/components/ThemeToggle';
 import { writeups, categoryColors, difficultyColors } from '@/app/data/writeups';
 import type { Writeup } from '@/app/data/writeups';
 import { domains, writeupUrl } from '@/app/lib/domains';
+import { readingTime } from '@/app/lib/readingTime';
 
 const categories: Array<Writeup['category'] | 'all'> = [
   'all',
@@ -49,10 +50,7 @@ export default function WriteupsPage() {
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        setSearchOpen((prev) => !prev);
-      }
+      // Cmd+K is reserved for the global command palette; only handle Escape here.
       if (e.key === 'Escape') {
         setSearchOpen(false);
         setSearchQuery('');
@@ -132,7 +130,7 @@ export default function WriteupsPage() {
                       </button>
                     )}
                     <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono text-faint border border-card-border rounded bg-bg">
-                      ⌘K
+                      ESC
                     </kbd>
                   </div>
                 </div>
@@ -274,6 +272,9 @@ export default function WriteupsPage() {
                       <div className="mt-4 pt-3 border-t border-card-border flex items-center justify-between">
                         <span className="text-xs font-mono text-faint group-hover:text-neon-green transition-colors">
                           Read more →
+                        </span>
+                        <span className="text-[10px] font-mono text-faint">
+                          {readingTime(writeup.content).minutes} min read
                         </span>
                       </div>
                     </div>

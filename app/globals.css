@@ -2,22 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Light theme (default) */
+/* Light theme (default) — tuned for high readability */
 :root {
   --color-bg: 245 245 245;
-  --color-neon-green: 22 163 74;
-  --color-muted-cyan: 2 132 199;
+  --color-neon-green: 21 128 61;        /* green-700 — better contrast on white */
+  --color-muted-cyan: 3 105 161;        /* sky-700 — better contrast on white */
   --color-card-bg: 255 255 255;
-  --color-card-border: 229 231 235;
-  --color-primary: 17 24 39;
-  --color-secondary: 55 65 81;
-  --color-muted: 75 85 99;
-  --color-dimmed: 107 114 128;
-  --color-faint: 156 163 175;
+  --color-card-border: 209 213 219;     /* gray-300 — visible borders */
+  --color-primary: 17 24 39;            /* gray-900 — headings, strongest text */
+  --color-secondary: 31 41 55;          /* gray-800 — was gray-700 */
+  --color-muted: 55 65 81;              /* gray-700 — body text, was gray-600 */
+  --color-dimmed: 75 85 99;             /* gray-600 — was gray-500 */
+  --color-faint: 107 114 128;           /* gray-500 — was gray-400 */
   --color-terminal-bar: 243 244 246;
   --color-overlay: 0 0 0;
-  --glitch-green: #16a34a;
-  --glitch-cyan: #0284c7;
+  --glitch-green: #15803d;
+  --glitch-cyan: #0369a1;
 }
 
 /* Dark theme */
@@ -61,6 +61,19 @@ body {
   background: rgb(var(--color-bg));
   color: rgb(var(--color-muted));
   overflow-x: hidden;
+
+  /* Light theme: subpixel rendering + slightly heavier weight for crisp, readable text */
+  font-weight: 450;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: optimizeLegibility;
+}
+
+.dark body {
+  /* Dark theme: classic antialiasing — looks better on dark backgrounds */
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {

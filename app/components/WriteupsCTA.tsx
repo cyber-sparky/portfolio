@@ -18,7 +18,7 @@ export default function WriteupsCTA() {
           className="mb-10 sm:mb-14"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-primary mb-2">
-            <span className="text-muted-cyan">03.</span> blog
+            <span className="text-muted-cyan">04.</span> blog
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-neon-green to-transparent" />
         </motion.div>
