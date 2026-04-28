@@ -28,15 +28,23 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <div className="min-h-screen bg-bg text-secondary">
-      {/* Print-only styles */}
+      {/* Print-only styles — optimized for single-page output */}
       <style>{`
-        @page { margin: 0; }
+        @page { margin: 0; size: A4; }
         @media print {
-          body { background: #fff !important; color: #111 !important; margin: 0 !important; padding: 10mm 15mm !important; }
-          .no-print { display: none !important; }
-          .print-page { 
-            background: #fff !important; 
-            color: #111 !important; 
+          body {
+            background: #fff !important;
+            color: #111 !important;
+            margin: 0 !important;
+            padding: 8mm 12mm !important;
+            font-size: 9.5pt !important;
+            line-height: 1.35 !important;
+          }
+          .no-print, .print-hide { display: none !important; }
+
+          .print-page {
+            background: #fff !important;
+            color: #111 !important;
             padding: 0 !important;
             max-width: 100% !important;
           }
@@ -44,8 +52,33 @@ export default function ResumePage() {
           .print-page .accent { color: #0a6e31 !important; }
           .print-page .sub-accent { color: #0077b6 !important; }
           .print-page .muted-print { color: #555 !important; }
-          .print-page .section-border { border-color: #ccc !important; }
-          a { text-decoration: none !important; }
+
+          /* Tighten everything for one-page fit */
+          .print-page hr { display: none !important; }
+          .print-page section { margin-bottom: 10pt !important; page-break-inside: avoid; }
+          .print-page header { margin-bottom: 8pt !important; }
+          .print-page h1 { font-size: 18pt !important; line-height: 1.1 !important; }
+          .print-page h2 { font-size: 9pt !important; margin-bottom: 5pt !important; }
+          .print-page h3 { font-size: 10pt !important; }
+          .print-page p, .print-page li, .print-page span, .print-page a {
+            font-size: 9.5pt !important;
+            line-height: 1.35 !important;
+          }
+          .print-page .text-xs, .print-page .font-mono.text-xs { font-size: 8.5pt !important; }
+
+          /* Compact list/item spacing */
+          .print-page .space-y-6 > * + * { margin-top: 6pt !important; }
+          .print-page .space-y-5 > * + * { margin-top: 5pt !important; }
+          .print-page .space-y-4 > * + * { margin-top: 4pt !important; }
+          .print-page .space-y-3 > * + * { margin-top: 3pt !important; }
+          .print-page .space-y-2\\.5 > * + * { margin-top: 2pt !important; }
+          .print-page .space-y-1\\.5 > * + * { margin-top: 2pt !important; }
+          .print-page ul li { margin-top: 1.5pt !important; }
+
+          /* Keep entries together */
+          .print-page section > div > div { page-break-inside: avoid; }
+
+          a { text-decoration: none !important; color: #111 !important; }
         }
       `}</style>
 
@@ -216,7 +249,7 @@ export default function ResumePage() {
                 </div>
                 <span className="muted-print text-dimmed font-mono text-xs shrink-0">Sep 2025</span>
               </div>
-              <p className="text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
+              <p className="print-hide text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
                 Industry-recognized credential validating expertise in securing AI/ML systems — covering adversarial machine learning,
                 LLM security risks, AI supply chain threats, and secure ML pipeline architecture.
               </p>
@@ -229,7 +262,7 @@ export default function ResumePage() {
                 </div>
                 <span className="muted-print text-dimmed font-mono text-xs shrink-0">Apr 2025</span>
               </div>
-              <p className="text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
+              <p className="print-hide text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
                 Hands-on certification demonstrating proficiency in embedding security into CI/CD pipelines — including
                 SAST, DAST, SCA, infrastructure-as-code scanning, container hardening, and compliance-as-code practices.
               </p>
@@ -242,7 +275,7 @@ export default function ResumePage() {
                 </div>
                 <span className="muted-print text-dimmed font-mono text-xs shrink-0">Jan 2024</span>
               </div>
-              <p className="text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
+              <p className="print-hide text-muted mt-1.5 leading-relaxed text-xs sm:text-sm">
                 Google&apos;s professional-level cybersecurity program covering network defense, incident detection and response,
                 SIEM tooling (Splunk, Chronicle), Linux system administration, and Python-based security automation.
               </p>
@@ -303,8 +336,8 @@ export default function ResumePage() {
 
         <hr className="section-border border-card-border mb-8" />
 
-        {/* Projects */}
-        <section>
+        {/* Projects — hidden in print since covered in Experience bullets */}
+        <section className="print-hide">
           <h2 className="accent text-neon-green font-mono text-sm font-bold uppercase tracking-widest mb-5">
             Projects
           </h2>
