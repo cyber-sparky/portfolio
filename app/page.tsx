@@ -1,4 +1,3 @@
-import dynamic from 'next/dynamic';
 import Navbar from '@/app/components/Navbar';
 import Hero from '@/app/components/Hero';
 import About from '@/app/components/About';
@@ -9,15 +8,12 @@ import Skills from '@/app/components/Skills';
 import GitHubActivity from '@/app/components/GitHubActivity';
 import WriteupsCTA from '@/app/components/WriteupsCTA';
 import Contact from '@/app/components/Contact';
-
-const MatrixRain = dynamic(() => import('@/app/components/MatrixRain'), {
-  ssr: false,
-});
+import MatrixRainClient from '@/app/components/MatrixRainClient';
 
 export default function Home() {
   return (
     <>
-      <MatrixRain />
+      <MatrixRainClient />
       <Navbar />
       <main id="main" className="relative z-10">
         <Hero />

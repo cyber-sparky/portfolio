@@ -7,7 +7,7 @@ import {
   difficultyColors,
 } from '@/app/data/writeups';
 import type { ContentBlock } from '@/app/data/writeups';
-import { domains, absoluteWriteupUrl } from '@/app/lib/domains';
+import { domains, absoluteWriteupUrl, isValidSlug } from '@/app/lib/domains';
 import ShareButtons from './ShareButtons';
 import StickyTOC from './StickyTOC';
 import RelatedPosts from './RelatedPosts';
@@ -19,12 +19,14 @@ export function generateStaticParams() {
   return writeups.map((w) => ({ slug: w.slug }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
-}): Metadata {
-  const writeup = writeups.find((w) => w.slug === params.slug);
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  if (!isValidSlug(slug)) return { title: 'Post Not Found' };
+  const writeup = writeups.find((w) => w.slug === slug);
   if (!writeup) return { title: 'Post Not Found' };
 
   const url = absoluteWriteupUrl(writeup.slug);
@@ -72,8 +74,17 @@ function extractImages(
 }
 
 function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
-  // Track image indices so each LightboxImage gets a stable position in the gallery.
-  let imageIndex = -1;
+  // Pre-compute block-index -> gallery-index mapping so we don't mutate
+  // closure variables during render (React 19 / react-hooks/immutability).
+  const imageIndexByBlock = new Map<number, number>();
+  let runningIdx = 0;
+  blocks.forEach((b, i) => {
+    if (b.type === 'image') {
+      imageIndexByBlock.set(i, runningIdx);
+      runningIdx += 1;
+    }
+  });
+
   return (
     <div className="space-y-5">
       {blocks.map((block, i) => {
@@ -126,13 +137,13 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
               </div>
             );
           case 'image': {
-            imageIndex += 1;
+            const galleryIndex = imageIndexByBlock.get(i) ?? 0;
             return (
               <figure key={i} className="my-6">
                 <LightboxImage
                   src={block.src}
                   alt={block.alt}
-                  index={imageIndex}
+                  index={galleryIndex}
                 />
                 {block.alt && (
                   <figcaption className="mt-2 text-xs font-mono text-dimmed text-center">
@@ -194,8 +205,16 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
   );
 }
 
-export default function WriteupDetail({ params }: { params: { slug: string } }) {
-  const writeup = writeups.find((w) => w.slug === params.slug);
+export default async function WriteupDetail({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  if (!isValidSlug(slug)) {
+    notFound();
+  }
+  const writeup = writeups.find((w) => w.slug === slug);
 
   if (!writeup) {
     notFound();

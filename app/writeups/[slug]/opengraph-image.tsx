@@ -1,17 +1,20 @@
 import { ImageResponse } from 'next/og';
 import { writeups } from '@/app/data/writeups';
+import { isValidSlug } from '@/app/lib/domains';
 
-export const runtime = 'edge';
 export const alt = 'Blog post on cybersparky_';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export function generateImageMetadata({
+export async function generateImageMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const writeup = writeups.find((w) => w.slug === params.slug);
+  const { slug } = await params;
+  const writeup = isValidSlug(slug)
+    ? writeups.find((w) => w.slug === slug)
+    : undefined;
   return [
     {
       contentType: 'image/png',
@@ -35,9 +38,12 @@ const categoryAccent: Record<string, string> = {
 export default async function PostOGImage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const writeup = writeups.find((w) => w.slug === params.slug);
+  const { slug } = await params;
+  const writeup = isValidSlug(slug)
+    ? writeups.find((w) => w.slug === slug)
+    : undefined;
 
   if (!writeup) {
     return new ImageResponse(
