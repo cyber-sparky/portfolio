@@ -1,12 +1,28 @@
 import type { Metadata } from 'next';
 import PrintButton from './PrintButton';
 import ThemeToggle from '@/app/components/ThemeToggle';
-import { domains } from '@/app/lib/domains';
+import { domains, absoluteUrls } from '@/app/lib/domains';
 import { ResumeEmailLink } from './ResumeEmail';
 
 export const metadata: Metadata = {
   title: 'Resume — Pranaw M | Security Engineer',
-  description: 'Resume of Pranaw M, Security Engineer at Freshworks.',
+  description:
+    'Resume of Pranaw M — Security Engineer at Freshworks. Specializing in application security, DevSecOps, SAST/SCA, and CI/CD pipeline hardening. Certified in AI Security (CAISP) and DevSecOps (CDP).',
+  alternates: {
+    canonical: absoluteUrls.resume,
+  },
+  openGraph: {
+    title: 'Resume — Pranaw M | Security Engineer',
+    description:
+      'Security Engineer at Freshworks specializing in AppSec, DevSecOps, and CI/CD security automation.',
+    url: absoluteUrls.resume,
+    type: 'profile',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Resume — Pranaw M | Security Engineer',
+    description: 'Security Engineer at Freshworks. AppSec, DevSecOps, CI/CD security.',
+  },
 };
 
 export default function ResumePage() {
@@ -50,7 +66,7 @@ export default function ResumePage() {
       </div>
 
       {/* Resume content */}
-      <div className="print-page max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
+      <main id="main" className="print-page max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
 
         {/* Header */}
         <header className="mb-8 sm:mb-10">
@@ -312,7 +328,7 @@ export default function ResumePage() {
           </div>
         </section>
 
-      </div>
+      </main>
     </div>
   );
 }

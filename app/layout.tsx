@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Outfit } from 'next/font/google';
 import ThemeProvider from '@/app/components/ThemeProvider';
+import { absoluteUrls } from '@/app/lib/domains';
 import './globals.css';
 
 const jetbrainsMono = JetBrains_Mono({
@@ -16,7 +17,11 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'cybersparky_ | Security Engineer',
+  metadataBase: new URL(absoluteUrls.home),
+  title: {
+    default: 'cybersparky_ | Security Engineer',
+    template: '%s | cybersparky_',
+  },
   description:
     'Portfolio of Pranaw M — security engineer specializing in application security, DevSecOps, and building secure CI/CD pipelines.',
   keywords: [
@@ -27,12 +32,26 @@ export const metadata: Metadata = {
     'SCA',
     'container security',
     'cybersparky',
+    'Pranaw M',
+    'AppSec',
   ],
-  authors: [{ name: 'Pranaw M' }],
+  authors: [{ name: 'Pranaw M', url: absoluteUrls.home }],
+  creator: 'Pranaw M',
+  publisher: 'Pranaw M',
+  alternates: {
+    canonical: '/',
+    types: {
+      'application/rss+xml': [
+        { url: `${absoluteUrls.writeups}/feed.xml`, title: 'cybersparky_ blog' },
+      ],
+    },
+  },
   openGraph: {
     title: 'cybersparky_ | Security Engineer',
     description:
       'Securing code. Shipping safe. Security engineer portfolio showcasing AppSec expertise and tooling.',
+    url: absoluteUrls.home,
+    siteName: 'cybersparky_',
     type: 'website',
     locale: 'en_US',
   },
@@ -40,15 +59,24 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'cybersparky_ | Security Engineer',
     description: 'Securing code. Shipping safe.',
+    creator: '@cybersparky',
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
   icons: {
     icon: '/favicon.png',
     apple: '/favicon.png',
   },
+  category: 'technology',
 };
 
 const themeScript = `
@@ -70,6 +98,12 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="font-sans antialiased transition-colors duration-300">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-neon-green focus:text-bg focus:font-mono focus:text-sm focus:rounded-md"
+        >
+          Skip to content
+        </a>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

@@ -70,7 +70,10 @@ function TerminalLine({
       <span className={`break-all sm:break-normal ${line.isOutput ? 'text-neon-green/80' : 'text-secondary'}`}>
         {displayed}
         {!done && (
-          <span className="inline-block w-2 h-4 bg-neon-green ml-0.5 animate-blink align-middle" />
+          <span
+            className="inline-block w-2 h-4 bg-neon-green ml-0.5 animate-blink align-middle"
+            aria-hidden="true"
+          />
         )}
       </span>
     </div>
@@ -208,6 +211,7 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ delay: 3 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          aria-hidden="true"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}

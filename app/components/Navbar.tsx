@@ -65,19 +65,23 @@ export default function Navbar() {
           </button>
 
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => handleNavClick(link.href)}
-                className={`px-3 py-2 text-sm font-mono rounded-md transition-all duration-200 ${
-                  activeSection === link.href.replace('#', '')
-                    ? 'text-neon-green text-glow bg-neon-green/5'
-                    : 'text-muted hover:text-neon-green hover:bg-overlay/5'
-                }`}
-              >
-                {link.label}
-              </button>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.replace('#', '');
+              return (
+                <button
+                  key={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  aria-current={isActive ? 'location' : undefined}
+                  className={`px-3 py-2 text-sm font-mono rounded-md transition-all duration-200 ${
+                    isActive
+                      ? 'text-neon-green text-glow bg-neon-green/5'
+                      : 'text-muted hover:text-neon-green hover:bg-overlay/5'
+                  }`}
+                >
+                  {link.label}
+                </button>
+              );
+            })}
 
             <a
               href={domains.writeups}

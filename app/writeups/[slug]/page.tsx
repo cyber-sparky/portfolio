@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,18 +9,48 @@ import {
   difficultyColors,
 } from '@/app/data/writeups';
 import type { ContentBlock } from '@/app/data/writeups';
-import { domains } from '@/app/lib/domains';
+import { domains, absoluteWriteupUrl } from '@/app/lib/domains';
+import ShareButtons from './ShareButtons';
 
 export function generateStaticParams() {
   return writeups.map((w) => ({ slug: w.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }) {
+export function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Metadata {
   const writeup = writeups.find((w) => w.slug === params.slug);
   if (!writeup) return { title: 'Post Not Found' };
+
+  const url = absoluteWriteupUrl(writeup.slug);
+  const title = `${writeup.title} — ${writeup.ctfName}`;
+
   return {
-    title: `${writeup.title} — ${writeup.ctfName} | cybersparky_`,
+    title,
     description: writeup.description,
+    keywords: [...writeup.tags, writeup.category, writeup.ctfName, 'cybersparky'],
+    authors: [{ name: 'Pranaw M' }],
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      type: 'article',
+      title,
+      description: writeup.description,
+      url,
+      siteName: 'cybersparky_',
+      publishedTime: writeup.date,
+      authors: ['Pranaw M'],
+      tags: writeup.tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: writeup.description,
+      creator: '@cybersparky',
+    },
   };
 }
 
@@ -31,7 +62,10 @@ function TableOfContents({ blocks }: { blocks: ContentBlock[] }) {
   if (headings.length < 2) return null;
 
   return (
-    <nav className="mb-10 p-5 bg-card-bg border border-card-border rounded-lg">
+    <nav
+      className="mb-10 p-5 bg-card-bg border border-card-border rounded-lg"
+      aria-label="Table of contents"
+    >
       <div className="text-xs font-mono text-dimmed uppercase tracking-widest mb-3">
         Table of Contents
       </div>
@@ -66,7 +100,7 @@ function ContentRenderer({ blocks }: { blocks: ContentBlock[] }) {
                 id={block.value.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
                 className="text-xl sm:text-2xl font-bold font-mono text-primary mt-10 mb-3 scroll-mt-20"
               >
-                <span className="text-neon-green mr-2">#</span>
+                <span className="text-neon-green mr-2" aria-hidden="true">#</span>
                 {block.value}
               </h2>
             );
@@ -211,7 +245,7 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
         </div>
       </div>
 
-      <article className="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
+      <article id="main" className="max-w-4xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
         {/* Meta */}
         <header className="mb-10">
           <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -264,8 +298,14 @@ export default function WriteupDetail({ params }: { params: { slug: string } }) 
         {/* Content */}
         <ContentRenderer blocks={writeup.content} />
 
+        {/* Share buttons */}
+        <ShareButtons
+          title={`${writeup.title} — ${writeup.ctfName}`}
+          url={absoluteWriteupUrl(writeup.slug)}
+        />
+
         {/* Footer nav */}
-        <div className="mt-16 pt-8 border-t border-card-border">
+        <div className="mt-12 pt-8 border-t border-card-border">
           <a
             href={domains.writeups}
             className="inline-flex items-center gap-2 text-sm font-mono text-muted hover:text-neon-green transition-colors"

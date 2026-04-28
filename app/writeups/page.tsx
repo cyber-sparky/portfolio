@@ -142,7 +142,7 @@ export default function WriteupsPage() {
         </AnimatePresence>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
+      <main id="main" className="max-w-5xl mx-auto px-4 sm:px-8 py-10 sm:py-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -151,7 +151,7 @@ export default function WriteupsPage() {
           className="mb-10 sm:mb-14"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-mono text-primary mb-3 tracking-tight">
-            <span className="text-neon-green">$</span> blog
+            <span className="text-neon-green" aria-hidden="true">$</span> blog
           </h1>
           <p className="text-muted font-sans text-sm sm:text-base max-w-xl">
             CTF writeups, security research, and technical deep-dives — covering web exploitation,
@@ -165,6 +165,8 @@ export default function WriteupsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.15 }}
           className="flex flex-wrap gap-2 mb-8"
+          role="group"
+          aria-label="Filter posts by category"
         >
           {categories.map((cat) => {
             const count =
@@ -176,6 +178,7 @@ export default function WriteupsPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
+                aria-pressed={activeCategory === cat}
                 className={`px-3 py-1.5 text-xs sm:text-sm font-mono rounded-md border transition-all duration-300 ${
                   activeCategory === cat
                     ? 'bg-neon-green/10 border-neon-green/40 text-neon-green'
@@ -280,7 +283,7 @@ export default function WriteupsPage() {
             )}
           </AnimatePresence>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function Home() {
     <>
       <MatrixRain />
       <Navbar />
-      <main className="relative z-10">
+      <main id="main" className="relative z-10">
         <Hero />
         <About />
         <Skills />

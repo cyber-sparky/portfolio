@@ -58,7 +58,7 @@ export default function NotFound() {
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-4">
+      <main id="main" className="flex-1 flex items-center justify-center px-4">
         <div className="text-center max-w-lg">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -135,7 +135,7 @@ export default function NotFound() {
             HTTP 404 — If you think this is a bug, reach out.
           </motion.p>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

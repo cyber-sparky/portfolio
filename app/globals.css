@@ -129,14 +129,22 @@ body {
 
 .glitch-text::before {
   color: var(--glitch-green);
-  animation: glitch-clip-1 2s infinite linear alternate-reverse;
   z-index: -1;
 }
 
 .glitch-text::after {
   color: var(--glitch-cyan);
-  animation: glitch-clip-2 2s infinite linear alternate-reverse;
   z-index: -2;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .glitch-text::before {
+    animation: glitch-clip-1 2s infinite linear alternate-reverse;
+  }
+
+  .glitch-text::after {
+    animation: glitch-clip-2 2s infinite linear alternate-reverse;
+  }
 }
 
 @keyframes glitch-clip-1 {
