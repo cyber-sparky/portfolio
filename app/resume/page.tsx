@@ -342,7 +342,7 @@ export default function ResumePage() {
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
               <div>
                 <span className="text-primary font-semibold">BCA, Computer Application</span>
-                <span className="muted-print text-dimmed"> — SASTRA Deemed University</span>
+                <span className="muted-print text-dimmed"> — SASTRA Online</span>
               </div>
               <span className="muted-print text-dimmed font-mono text-xs shrink-0">2025 — 2027</span>
             </div>
