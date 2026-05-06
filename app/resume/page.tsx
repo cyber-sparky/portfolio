@@ -132,11 +132,12 @@ export default function ResumePage() {
             Summary
           </h2>
           <p className="text-sm leading-relaxed font-sans text-muted">
-            Security engineer at Freshworks with hands-on experience in application security,
-            DevSecOps, and penetration testing. Focused on embedding security into CI/CD
-            pipelines through SAST, SCA, and container scanning using tools like Semgrep, Snyk,
-            and Wiz. Proficient in Python, Java, JavaScript, and C++ with a strong foundation
-            in full-stack development. Certified in AI Security (CAISP) and DevSecOps (CDP).
+            Security Engineer at Freshworks specializing in application security, DevSecOps, and
+            offensive security. Discovered critical-severity vulnerabilities across production
+            services, embedded SAST, SCA, and container scanning into CI/CD pipelines using
+            Semgrep, Snyk, and Wiz, and performed manual code reviews and pentests on web
+            applications and REST APIs. Certified in AI Security (CAISP) and DevSecOps
+            (CDP). Proficient in Python, Java, and JavaScript.
           </p>
         </section>
 
@@ -162,19 +163,27 @@ export default function ResumePage() {
               <ul className="mt-2 space-y-1.5 text-sm text-muted font-sans list-none">
                 <li className="flex gap-2">
                   <span className="text-neon-green/60 shrink-0">▸</span>
-                  Conduct application security assessments and code reviews across Freshworks product lines
+                  Discovered and reported multiple critical-severity vulnerabilities across Freshworks production services, partnering with engineering teams to drive remediation
                 </li>
                 <li className="flex gap-2">
                   <span className="text-neon-green/60 shrink-0">▸</span>
-                  Integrate SAST/SCA tooling (Semgrep, Snyk) into CI/CD pipelines to enforce security guardrails
+                  Performed manual secure code reviews across Freshworks product lines to surface business-logic and authorization flaws missed by automated scanners
                 </li>
                 <li className="flex gap-2">
                   <span className="text-neon-green/60 shrink-0">▸</span>
-                  Manage cloud security posture using Wiz across production infrastructure
+                  Pentested web applications and REST APIs across Freshworks products, uncovering authentication, access-control, and IDOR-class vulnerabilities
                 </li>
                 <li className="flex gap-2">
                   <span className="text-neon-green/60 shrink-0">▸</span>
-                  Triage and validate vulnerability reports from external security researchers
+                  Integrated SAST/SCA tooling (Semgrep, Snyk) into CI/CD pipelines to enforce automated security guardrails on every pull request
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-neon-green/60 shrink-0">▸</span>
+                  Managed cloud security posture with Wiz across production infrastructure, applying microservices and CI/CD best practices to prioritize risk-based remediation
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-neon-green/60 shrink-0">▸</span>
+                  Triaged and validated vulnerability reports from external security researchers, coordinating disclosure and fixes with product teams
                 </li>
               </ul>
             </div>
@@ -290,21 +299,33 @@ export default function ResumePage() {
           <h2 className="accent text-neon-green font-mono text-sm font-bold uppercase tracking-widest mb-4">
             Skills
           </h2>
-          <div className="grid sm:grid-cols-2 gap-x-8 gap-y-2 text-sm font-sans">
+          <div className="grid gap-y-2 text-sm font-sans">
             <div className="flex gap-2">
-              <span className="muted-print text-dimmed font-mono w-24 shrink-0">Languages</span>
-              <span className="text-secondary">Python, Java, JavaScript, C++</span>
+              <span className="muted-print text-dimmed font-mono w-32 shrink-0">Languages</span>
+              <span className="text-secondary">Python, Java, JavaScript, Bash, SQL, C++</span>
             </div>
             <div className="flex gap-2">
-              <span className="muted-print text-dimmed font-mono w-24 shrink-0">Security</span>
-              <span className="text-secondary">Semgrep, Snyk, Wiz, SAST, DAST, SCA</span>
+              <span className="muted-print text-dimmed font-mono w-32 shrink-0">AppSec</span>
+              <span className="text-secondary">Secure code review, threat modeling, OWASP Top 10, OWASP API Security Top 10, vulnerability triage, CVSS v3.1</span>
             </div>
             <div className="flex gap-2">
-              <span className="muted-print text-dimmed font-mono w-24 shrink-0">DevOps</span>
-              <span className="text-secondary">Docker, Podman, GitHub Actions</span>
+              <span className="muted-print text-dimmed font-mono w-32 shrink-0">Offensive</span>
+              <span className="text-secondary">Web application pentest, REST API pentest, Burp Suite, authentication &amp; access-control testing, IDOR, SSRF, injection</span>
             </div>
             <div className="flex gap-2">
-              <span className="muted-print text-dimmed font-mono w-24 shrink-0">Web</span>
+              <span className="muted-print text-dimmed font-mono w-32 shrink-0">DevSecOps</span>
+              <span className="text-secondary">SAST (Semgrep), SCA (Snyk), DAST, container scanning, CI/CD security (GitHub Actions), secrets management, IaC scanning</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="muted-print text-dimmed font-mono w-32 shrink-0">Cloud &amp; Infra</span>
+              <span className="text-secondary">AWS, Wiz CSPM, Docker, Podman, microservices security</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="muted-print text-dimmed font-mono w-32 shrink-0">AI Security</span>
+              <span className="text-secondary">LLM security, prompt injection, OWASP LLM Top 10, adversarial ML, AI supply chain</span>
+            </div>
+            <div className="flex gap-2">
+              <span className="muted-print text-dimmed font-mono w-32 shrink-0">Web &amp; Data</span>
               <span className="text-secondary">HTML, CSS, MySQL, REST APIs</span>
             </div>
           </div>
@@ -336,26 +357,60 @@ export default function ResumePage() {
 
         <hr className="section-border border-card-border mb-8" />
 
-        {/* Projects — hidden in print since covered in Experience bullets */}
-        <section className="print-hide">
-          <h2 className="accent text-neon-green font-mono text-sm font-bold uppercase tracking-widest mb-5">
+        {/* Notable Findings & Recognition */}
+        <section className="mb-8">
+          <h2 className="accent text-neon-green font-mono text-sm font-bold uppercase tracking-widest mb-4">
+            Notable Findings &amp; Recognition
+          </h2>
+          <ul className="space-y-1.5 text-sm text-muted font-sans list-none">
+            <li className="flex gap-2">
+              <span className="text-neon-green/60 shrink-0">▸</span>
+              Reported critical and high-severity vulnerabilities across Freshworks production services, partnering with engineering on remediation
+            </li>
+            <li className="flex gap-2">
+              <span className="text-neon-green/60 shrink-0">▸</span>
+              Earned Certified AI Security Professional (CAISP) and Certified DevSecOps Professional (CDP) credentials from Practical DevSecOps
+            </li>
+            <li className="flex gap-2">
+              <span className="text-neon-green/60 shrink-0">▸</span>
+              Selected for Freshworks Software Academy (FSSA) — competitive 15-month full-stack engineering program leading directly into a Security Engineer role
+            </li>
+          </ul>
+        </section>
+
+        <hr className="section-border border-card-border mb-8" />
+
+        {/* Projects */}
+        <section className="mb-8">
+          <h2 className="accent text-neon-green font-mono text-sm font-bold uppercase tracking-widest mb-4">
             Projects
           </h2>
           <div className="space-y-4 text-sm font-sans">
             <div>
-              <h3 className="text-primary font-semibold">Scryptify</h3>
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+                <h3 className="text-primary font-semibold">
+                  Mario&apos;s Hunt — OAuth-themed CTF Challenge
+                </h3>
+                <a
+                  href="https://github.com/cyber-sparky/mario-s-hunt"
+                  className="muted-print text-dimmed font-mono text-xs hover:text-neon-green transition-colors shrink-0"
+                >
+                  github.com/cyber-sparky/mario-s-hunt
+                </a>
+              </div>
               <p className="text-muted mt-1 leading-relaxed">
-                Frontend cybersecurity education platform designed to teach non-technical
-                users about common threats, hacking methods, and digital self-defense
-                through an intuitive interface.
+                Capture-the-flag challenge built on Flask, Authlib, and Flask-OIDC with a MySQL backend,
+                designed to teach common OAuth 2.0 / OIDC misconfigurations and authentication-flow attacks.
+                Fully containerized with Docker Compose for one-command deployment.
+                <span className="muted-print text-dimmed"> · Stack: Python, Flask, Authlib, MySQL, Docker.</span>
               </p>
             </div>
             <div>
-              <h3 className="text-primary font-semibold">Fresh Leave — Leave Management System</h3>
+              <h3 className="text-primary font-semibold">Scryptify — Cybersecurity Education Platform</h3>
               <p className="text-muted mt-1 leading-relaxed">
-                Full-stack application with Java backend and MySQL database enabling
-                streamlined leave request workflows, real-time status tracking, and
-                manager approval dashboards.
+                Web platform that teaches non-technical users about phishing, social engineering, password
+                hygiene, MFA, and safe browsing through interactive lessons.
+                <span className="muted-print text-dimmed"> · Stack: HTML, CSS, JavaScript.</span>
               </p>
             </div>
           </div>
