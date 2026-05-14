@@ -1,16 +1,19 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+
+// Module-level variable completely ignores React component lifecycles,
+// guaranteeing it survives strict-mode unmounts and remounts.
+let lastTrackedPath: string | null = null;
 
 export default function Tracker() {
   const pathname = usePathname();
-  const trackedPath = useRef<string | null>(null);
 
   useEffect(() => {
     // Prevent duplicate tracking calls (happens in React 18+ concurrent mode)
-    if (trackedPath.current === pathname) return;
-    trackedPath.current = pathname;
+    if (lastTrackedPath === pathname) return;
+    lastTrackedPath = pathname;
 
     const analyticsUrl = process.env.NEXT_PUBLIC_ANALYTICS_URL || 'http://localhost:3001';
 
