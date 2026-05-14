@@ -13,7 +13,11 @@ export async function GET() {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `;
-    return NextResponse.json({ message: 'Table created successfully' }, { status: 200 });
+    
+    // Clear all existing tracking data to reset it to 0
+    await sql`DELETE FROM page_views;`;
+
+    return NextResponse.json({ message: 'Table created and data reset successfully' }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
