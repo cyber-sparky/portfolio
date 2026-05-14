@@ -89,6 +89,8 @@ const themeScript = `
 })();
 `;
 
+import Tracker from '@/app/components/Tracker';
+
 export default function RootLayout({
   children,
 }: {
@@ -107,6 +109,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <ThemeProvider>
+          <Tracker />
           <ScrollProgress />
           <CommandPalette />
           {children}
