@@ -1,13 +1,15 @@
 'use client';
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+
+const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'];
 
 export default function DashboardClient({ data }: { data: any[] }) {
   if (!data || data.length === 0) {
     return (
       <div className="bg-neutral-900 border border-neutral-800 p-12 rounded-lg text-center">
         <p className="text-neutral-400 font-mono mb-4">No tracking data found yet.</p>
-        <p className="text-sm text-neutral-500">
+        <p className="text-sm text-neutral-500 mb-6">
           Make sure your portfolio has the Tracker integrated and the database is initialized.
           <br/>
           (You can initialize it by visiting `/api/init-db` in your browser once)
@@ -16,9 +18,32 @@ export default function DashboardClient({ data }: { data: any[] }) {
     );
   }
 
-  // Process data for chart
+  // Basic Stats
+  const totalViews = data.length;
+  const uniqueVisitors = new Set(data.map(d => d.ip_hash)).size;
+
+  // Generic counter function
+  const countByField = (field: string) => {
+    const counts = data.reduce((acc, curr) => {
+      const val = curr[field] || 'Unknown';
+      acc[val] = (acc[val] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+    return Object.entries(counts)
+      .map(([name, value]) => ({ name, value: value as number }))
+      .sort((a, b) => b.value - a.value);
+  };
+
+  const topPaths = countByField('path').slice(0, 5);
+  const topCountries = countByField('country').slice(0, 5);
+  const browsers = countByField('browser');
+  const operatingSystems = countByField('os');
+  const devices = countByField('device');
+
+  const topCountryName = topCountries.length > 0 && topCountries[0].name !== 'Unknown' ? topCountries[0].name : 'N/A';
+
+  // Views Over Time
   const groupedByDate: Record<string, number> = data.reduce((acc, curr) => {
-    // Check if created_at exists and is valid
     if (!curr.created_at) return acc;
     const dateStr = new Date(curr.created_at).toISOString().split('T')[0];
     acc[dateStr] = (acc[dateStr] || 0) + 1;
@@ -30,37 +55,46 @@ export default function DashboardClient({ data }: { data: any[] }) {
     views
   })).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-  const totalViews = data.length;
-  const uniqueVisitors = new Set(data.map(d => d.ip_hash)).size;
-  
-  // Top Paths
-  const pathsCount: Record<string, number> = data.reduce((acc, curr) => {
-    acc[curr.path] = (acc[curr.path] || 0) + 1;
-    return acc;
-  }, {});
-  
-  const topPaths = Object.entries(pathsCount)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5);
+  // Helper to render simple stat lists
+  const renderList = (items: {name: string, value: number}[]) => (
+    <div className="space-y-4">
+      {items.map((item, idx) => (
+        <div key={idx} className="flex justify-between items-center group">
+          <span className="font-mono text-sm text-neutral-300 truncate pr-4 group-hover:text-emerald-400 transition-colors">
+            {item.name === 'Unknown' ? 'Unknown/Bot' : item.name}
+          </span>
+          <span className="bg-neutral-950 border border-neutral-800 text-neutral-300 py-1 px-3 rounded text-xs font-mono">
+            {item.value}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="space-y-6">
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="space-y-6 pb-12">
+      {/* Top Level Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg relative overflow-hidden group hover:border-emerald-500/50 transition-colors">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <p className="text-neutral-400 text-sm font-mono mb-2">Total Page Views</p>
-          <p className="text-4xl sm:text-5xl font-bold text-white tracking-tight">{totalViews}</p>
+          <p className="text-neutral-400 text-xs font-mono mb-2 uppercase tracking-widest">Total Views</p>
+          <p className="text-4xl font-bold text-white tracking-tight">{totalViews}</p>
         </div>
         <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg relative overflow-hidden group hover:border-emerald-500/50 transition-colors">
-           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-          <p className="text-neutral-400 text-sm font-mono mb-2">Unique IPs</p>
-          <p className="text-4xl sm:text-5xl font-bold text-white tracking-tight">{uniqueVisitors}</p>
+          <p className="text-neutral-400 text-xs font-mono mb-2 uppercase tracking-widest">Unique IPs</p>
+          <p className="text-4xl font-bold text-white tracking-tight">{uniqueVisitors}</p>
+        </div>
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg relative overflow-hidden group hover:border-emerald-500/50 transition-colors">
+          <p className="text-neutral-400 text-xs font-mono mb-2 uppercase tracking-widest">Top Country</p>
+          <p className="text-4xl font-bold text-emerald-400 tracking-tight">{topCountryName}</p>
+        </div>
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg relative overflow-hidden group hover:border-emerald-500/50 transition-colors">
+          <p className="text-neutral-400 text-xs font-mono mb-2 uppercase tracking-widest">Top Device</p>
+          <p className="text-4xl font-bold text-emerald-400 tracking-tight">{devices[0]?.name || 'Unknown'}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Chart */}
+        {/* Main Chart */}
         <div className="lg:col-span-2 bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
           <h2 className="text-sm font-mono mb-6 text-neutral-400 uppercase tracking-widest">Views over time</h2>
           <div className="h-72">
@@ -82,16 +116,22 @@ export default function DashboardClient({ data }: { data: any[] }) {
         {/* Top Paths */}
         <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
           <h2 className="text-sm font-mono mb-6 text-neutral-400 uppercase tracking-widest">Top Paths</h2>
-          <div className="space-y-4">
-            {topPaths.map(([path, count]) => (
-              <div key={path} className="flex justify-between items-center group">
-                <span className="font-mono text-sm text-neutral-300 truncate pr-4 group-hover:text-emerald-400 transition-colors">{path}</span>
-                <span className="bg-neutral-950 border border-neutral-800 text-neutral-300 py-1 px-3 rounded text-xs font-mono">
-                  {count}
-                </span>
-              </div>
-            ))}
-          </div>
+          {renderList(topPaths)}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
+          <h2 className="text-sm font-mono mb-6 text-neutral-400 uppercase tracking-widest">Top Countries</h2>
+          {renderList(topCountries)}
+        </div>
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
+          <h2 className="text-sm font-mono mb-6 text-neutral-400 uppercase tracking-widest">Browsers</h2>
+          {renderList(browsers)}
+        </div>
+        <div className="bg-neutral-900 border border-neutral-800 p-6 rounded-lg">
+          <h2 className="text-sm font-mono mb-6 text-neutral-400 uppercase tracking-widest">Operating Systems</h2>
+          {renderList(operatingSystems)}
         </div>
       </div>
 
@@ -104,11 +144,8 @@ export default function DashboardClient({ data }: { data: any[] }) {
                if (window.confirm("WARNING: Are you sure you want to permanently delete ALL tracking data? This will reset your stats to zero and cannot be undone.")) {
                  try {
                    const res = await fetch('/api/reset-db', { method: 'POST' });
-                   if (res.ok) {
-                     window.location.reload();
-                   } else {
-                     alert("Failed to reset database. Make sure you are logged in.");
-                   }
+                   if (res.ok) window.location.reload();
+                   else alert("Failed to reset database. Make sure you are logged in.");
                  } catch (err) {
                    alert("Error resetting database.");
                  }
@@ -125,6 +162,8 @@ export default function DashboardClient({ data }: { data: any[] }) {
               <tr>
                 <th className="py-3 px-6 font-medium">Path</th>
                 <th className="py-3 px-6 font-medium">Time</th>
+                <th className="py-3 px-6 font-medium">Location</th>
+                <th className="py-3 px-6 font-medium">Platform</th>
                 <th className="py-3 px-6 font-medium">Referrer</th>
               </tr>
             </thead>
@@ -133,6 +172,8 @@ export default function DashboardClient({ data }: { data: any[] }) {
                 <tr key={row.id} className="hover:bg-neutral-800/30 transition-colors">
                   <td className="py-3 px-6 font-mono text-emerald-400/90">{row.path}</td>
                   <td className="py-3 px-6 text-neutral-400">{new Date(row.created_at).toLocaleString()}</td>
+                  <td className="py-3 px-6 text-neutral-400">{row.city !== 'Unknown' ? `${row.city}, ${row.country}` : row.country || '-'}</td>
+                  <td className="py-3 px-6 text-neutral-400">{row.os} • {row.browser}</td>
                   <td className="py-3 px-6 text-neutral-500 truncate max-w-[200px]">{row.referrer || '-'}</td>
                 </tr>
               ))}
