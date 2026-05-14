@@ -97,8 +97,27 @@ export default function DashboardClient({ data }: { data: any[] }) {
 
       {/* Recent Log */}
       <div className="bg-neutral-900 border border-neutral-800 rounded-lg overflow-hidden">
-        <div className="p-6 border-b border-neutral-800">
+        <div className="p-6 border-b border-neutral-800 flex justify-between items-center">
            <h2 className="text-sm font-mono text-neutral-400 uppercase tracking-widest">Recent Logs</h2>
+           <button 
+             onClick={async () => {
+               if (window.confirm("WARNING: Are you sure you want to permanently delete ALL tracking data? This will reset your stats to zero and cannot be undone.")) {
+                 try {
+                   const res = await fetch('/api/reset-db', { method: 'POST' });
+                   if (res.ok) {
+                     window.location.reload();
+                   } else {
+                     alert("Failed to reset database. Make sure you are logged in.");
+                   }
+                 } catch (err) {
+                   alert("Error resetting database.");
+                 }
+               }
+             }}
+             className="text-xs font-mono text-red-500 hover:text-red-400 hover:bg-red-500/10 px-3 py-1.5 rounded transition-colors border border-red-500/20"
+           >
+             [Reset Data]
+           </button>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
