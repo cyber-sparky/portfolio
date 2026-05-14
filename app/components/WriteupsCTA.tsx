@@ -57,16 +57,14 @@ export default function WriteupsCTA() {
                         {w.title}
                       </span>
                       <span
-                        className={`px-1.5 py-0.5 text-[9px] font-mono rounded border shrink-0 ${
-                          categoryColors[w.category]
-                        }`}
+                        className={`px-1.5 py-0.5 text-[9px] font-mono rounded border shrink-0 ${categoryColors[w.category]
+                          }`}
                       >
                         {w.category}
                       </span>
                       <span
-                        className={`text-[9px] font-mono shrink-0 ${
-                          difficultyColors[w.difficulty]
-                        }`}
+                        className={`text-[9px] font-mono shrink-0 ${difficultyColors[w.difficulty]
+                          }`}
                       >
                         {w.difficulty}
                       </span>

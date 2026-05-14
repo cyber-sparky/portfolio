@@ -25,7 +25,7 @@ export default function Contact() {
           className="mb-8 sm:mb-12"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold font-mono text-primary mb-2">
-            <span className="text-muted-cyan">05.</span> contact
+            <span className="text-muted-cyan">04.</span> contact
           </h2>
           <div className="h-px w-24 bg-gradient-to-r from-neon-green to-transparent mx-auto" />
         </motion.div>
