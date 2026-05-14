@@ -28,19 +28,8 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-white p-4 sm:p-8 font-sans selection:bg-emerald-500/30">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold font-mono text-emerald-400">
-            &gt; Portfolio Analytics
-          </h1>
-          <form action="/api/auth" method="POST">
-            <input type="hidden" name="action" value="logout" />
-            <button type="submit" className="text-neutral-500 hover:text-emerald-400 text-sm font-mono transition-colors">
-              [Logout]
-            </button>
-          </form>
-        </div>
+    <main className="min-h-screen p-4 sm:p-8 selection:bg-primary/30">
+      <div className="max-w-7xl mx-auto">
         <DashboardClient data={views} />
       </div>
     </main>
