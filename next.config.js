@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const analyticsUrl = process.env.NEXT_PUBLIC_ANALYTICS_URL || 'https://cybersparky-analytics.vercel.app';
+
 const securityHeaders = [
   { key: 'X-DNS-Prefetch-Control', value: 'on' },
   { key: 'X-Content-Type-Options', value: 'nosniff' },
@@ -17,12 +19,12 @@ const securityHeaders = [
     key: 'Content-Security-Policy',
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://avatars.githubusercontent.com https://github.com",
-      // GitHub REST API (top repos) + jogruber proxy used by react-github-calendar
-      "connect-src 'self' https://api.github.com https://github-contributions-api.jogruber.de",
+      // GitHub REST API + jogruber proxy + Custom Analytics + Cloudflare Beacon
+      `connect-src 'self' https://api.github.com https://github-contributions-api.jogruber.de ${analyticsUrl} https://cloudflareinsights.com`,
       "frame-ancestors 'none'",
       "base-uri 'self'",
       "form-action 'self'",
