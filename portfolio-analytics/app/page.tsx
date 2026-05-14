@@ -17,7 +17,7 @@ export default async function DashboardPage() {
   }
 
   // Fetch data
-  let views = [];
+  let views: any[] = [];
   try {
     const result = await sql`
       SELECT * FROM page_views ORDER BY created_at DESC LIMIT 1000
