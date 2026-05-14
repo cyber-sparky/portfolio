@@ -90,6 +90,7 @@ const themeScript = `
 `;
 
 import Tracker from '@/app/components/Tracker';
+import { Analytics } from '@vercel/analytics/next';
 
 export default function RootLayout({
   children,
@@ -114,6 +115,7 @@ export default function RootLayout({
           <CommandPalette />
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
