@@ -7,17 +7,15 @@ export const dynamic = 'force-dynamic';
 export default async function DashboardPage() {
   const cookieStore = await cookies();
   const authCookie = cookieStore.get('analytics_auth');
-  
-  // Basic Auth. Set ADMIN_PASSWORD in your Vercel Environment Variables.
-  // If not set, it defaults to 'secret' for local testing.
+
   const adminPassword = process.env.ADMIN_PASSWORD || 'secret';
-  
+
   if (authCookie?.value !== adminPassword) {
     return <Login />;
   }
 
-  // Fetch data
-  let views: any[] = [];
+  // Fetch real data from Postgres
+  let views: Record<string, unknown>[] = [];
   try {
     const result = await sql`
       SELECT * FROM page_views ORDER BY created_at DESC LIMIT 1000
@@ -27,33 +25,76 @@ export default async function DashboardPage() {
     console.error('Database query failed:', e);
   }
 
-  return (
-    <main className="min-h-screen p-4 sm:p-8 selection:bg-primary/30">
-      <div className="max-w-7xl mx-auto">
-        <DashboardClient data={views} />
-      </div>
-    </main>
-  );
+  return <DashboardClient data={views as unknown as Parameters<typeof DashboardClient>[0]['data']} />;
 }
 
 function Login() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-950 p-4">
-      <form action="/api/auth" method="POST" className="bg-neutral-900 p-8 rounded-lg border border-neutral-800 shadow-2xl w-full max-w-sm">
-        <h2 className="text-xl text-emerald-400 font-mono mb-6 flex items-center gap-2">
-          <span className="text-neutral-500">~</span> Login
-        </h2>
-        <input 
-          type="password" 
-          name="password" 
-          placeholder="Enter Admin Password"
-          required
-          className="w-full bg-neutral-950 border border-neutral-700 text-white p-3 mb-6 rounded focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none font-mono transition-all"
-        />
-        <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-500 text-white p-3 rounded font-bold font-mono transition-colors shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_25px_rgba(16,185,129,0.5)]">
-          Access Data
-        </button>
-      </form>
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{ background: 'linear-gradient(135deg, #0A0A0F 0%, #111118 100%)' }}
+    >
+      <div className="w-full max-w-sm">
+        {/* Logo */}
+        <div className="flex items-center justify-center gap-3 mb-10">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center"
+            style={{ background: 'linear-gradient(135deg, #0066FF 0%, #00D4AA 100%)' }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+          </div>
+          <span className="text-white text-xl font-semibold tracking-tight">Portfolio Analytics</span>
+        </div>
+
+        {/* Card */}
+        <form
+          action="/api/auth"
+          method="POST"
+          className="p-8 rounded-2xl"
+          style={{
+            background: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            backdropFilter: 'blur(12px)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+          }}
+        >
+          <h2 className="text-white text-lg font-semibold mb-1.5">Welcome back</h2>
+          <p className="text-sm mb-8" style={{ color: '#6B7280' }}>Enter your admin password to continue.</p>
+
+          <label htmlFor="password" className="block text-xs font-medium uppercase tracking-wide mb-2" style={{ color: '#6B7280' }}>
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="••••••••"
+            required
+            className="w-full px-4 py-3 rounded-xl text-sm text-white placeholder:text-gray-600 outline-none transition-all mb-6"
+            style={{
+              background: 'rgba(255, 255, 255, 0.04)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
+            }}
+          />
+
+          <button
+            type="submit"
+            className="w-full py-3 rounded-xl text-sm font-semibold text-white transition-all"
+            style={{
+              background: 'linear-gradient(135deg, #0066FF 0%, #0052CC 100%)',
+              boxShadow: '0 2px 12px rgba(0, 102, 255, 0.4)',
+            }}
+          >
+            Sign In
+          </button>
+        </form>
+
+        <p className="text-center mt-6 text-xs" style={{ color: '#4B5563' }}>
+          Protected analytics dashboard
+        </p>
+      </div>
     </div>
   );
 }
