@@ -1,15 +1,17 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 export default function Tracker() {
   const pathname = usePathname();
+  const trackedPath = useRef<string | null>(null);
 
   useEffect(() => {
-    // Determine the analytics URL based on environment or use a hardcoded production URL
-    // For local testing of the analytics server, we can point to localhost:3001
-    // In production, you would set NEXT_PUBLIC_ANALYTICS_URL to your deployed Vercel URL
+    // Prevent duplicate tracking calls (happens in React 18+ concurrent mode)
+    if (trackedPath.current === pathname) return;
+    trackedPath.current = pathname;
+
     const analyticsUrl = process.env.NEXT_PUBLIC_ANALYTICS_URL || 'http://localhost:3001';
 
     const trackVisit = async () => {
@@ -25,7 +27,6 @@ export default function Tracker() {
           }),
         });
       } catch (error) {
-        // Silently fail in case of tracking errors (adblockers, etc) to not break the UI
         console.warn('Analytics tracking skipped or failed.');
       }
     };
