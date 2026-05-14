@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono, Outfit } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import ThemeProvider from '@/app/components/ThemeProvider';
 import ScrollProgress from '@/app/components/ScrollProgress';
 import CommandPalette from '@/app/components/CommandPalette';
@@ -114,6 +115,7 @@ export default function RootLayout({
           <CommandPalette />
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
