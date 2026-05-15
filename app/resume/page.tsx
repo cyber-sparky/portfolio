@@ -5,23 +5,23 @@ import { domains, absoluteUrls } from '@/app/lib/domains';
 import { ResumeEmailLink } from './ResumeEmail';
 
 export const metadata: Metadata = {
-  title: 'Resume — Pranaw M | Security Engineer',
+  title: 'Resume — Pranaw M',
   description:
-    'Resume of Pranaw M — Security Engineer at Freshworks. Specializing in application security, DevSecOps, SAST/SCA, and CI/CD pipeline hardening. Certified in AI Security (CAISP) and DevSecOps (CDP).',
+    'Resume of Pranaw M — Offensive Security Engineer and bug bounty hunter. Specializing in web application pentesting, application security, DevSecOps, and CI/CD pipeline hardening.',
   alternates: {
     canonical: absoluteUrls.resume,
   },
   openGraph: {
-    title: 'Resume — Pranaw M | Security Engineer',
+    title: 'Resume — Pranaw M | CyberSparky',
     description:
-      'Security Engineer at Freshworks specializing in AppSec, DevSecOps, and CI/CD security automation.',
+      'Offensive Security Engineer specializing in web app pentesting, AppSec, DevSecOps, and CI/CD security automation.',
     url: absoluteUrls.resume,
     type: 'profile',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Resume — Pranaw M | Security Engineer',
-    description: 'Security Engineer at Freshworks. AppSec, DevSecOps, CI/CD security.',
+    title: 'Resume — Pranaw M | CyberSparky',
+    description: 'Offensive Security Engineer. Web app pentesting, AppSec, DevSecOps.',
   },
 };
 

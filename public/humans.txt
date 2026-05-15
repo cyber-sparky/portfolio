@@ -1,0 +1,7 @@
+/* TEAM */
+Developer & Security Researcher: Pranaw M
+Handle: CyberSparky
+Location: Chennai, India
+
+/* SITE */
+Built with: Next.js 14, Tailwind CSS, Vercel

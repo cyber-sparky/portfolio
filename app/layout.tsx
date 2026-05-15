@@ -3,6 +3,7 @@ import { JetBrains_Mono, Outfit } from 'next/font/google';
 import ThemeProvider from '@/app/components/ThemeProvider';
 import ScrollProgress from '@/app/components/ScrollProgress';
 import CommandPalette from '@/app/components/CommandPalette';
+import JsonLd from '@/app/components/JsonLd';
 import { absoluteUrls } from '@/app/lib/domains';
 import './globals.css';
 
@@ -18,30 +19,34 @@ const outfit = Outfit({
   display: 'swap',
 });
 
+// TODO: add Google Search Console verification token here
+// verification: { google: 'YOUR_VERIFICATION_TOKEN' },
+
 export const metadata: Metadata = {
-  metadataBase: new URL(absoluteUrls.home),
+  metadataBase: new URL('https://cybersparky.in'),
   title: {
-    default: 'cybersparky_ | Security Engineer',
-    template: '%s | cybersparky_',
+    template: '%s | CyberSparky',
+    default: 'Pranaw M (CyberSparky) — Offensive Security Engineer',
   },
   description:
-    'Portfolio of Pranaw M — security engineer specializing in application security, DevSecOps, and building secure CI/CD pipelines.',
+    'Web application penetration tester and bug bounty hunter. Specializing in XSS, IDOR, CSRF, and API security. Open to offensive security engineering roles.',
   keywords: [
-    'security engineer',
-    'application security',
-    'DevSecOps',
-    'SAST',
-    'SCA',
-    'container security',
+    'web application pentester',
+    'bug bounty hunter',
+    'offensive security engineer',
     'cybersparky',
-    'Pranaw M',
-    'AppSec',
+    'HackerOne',
+    'XSS',
+    'IDOR',
+    'Chennai',
+    'India',
+    'penetration testing',
   ],
-  authors: [{ name: 'Pranaw M', url: absoluteUrls.home }],
+  authors: [{ name: 'Pranaw M', url: 'https://cybersparky.in' }],
   creator: 'Pranaw M',
   publisher: 'Pranaw M',
   alternates: {
-    canonical: '/',
+    canonical: 'https://cybersparky.in',
     types: {
       'application/rss+xml': [
         { url: `${absoluteUrls.writeups}/feed.xml`, title: 'cybersparky_ blog' },
@@ -49,19 +54,28 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'cybersparky_ | Security Engineer',
+    title: 'Pranaw M (CyberSparky) — Offensive Security Engineer',
     description:
-      'Securing code. Shipping safe. Security engineer portfolio showcasing AppSec expertise and tooling.',
-    url: absoluteUrls.home,
-    siteName: 'cybersparky_',
+      'Web application penetration tester and bug bounty hunter. Specializing in XSS, IDOR, CSRF, and API security.',
+    url: 'https://cybersparky.in',
+    siteName: 'CyberSparky',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Pranaw M — Offensive Security Engineer',
+      },
+    ],
+    locale: 'en_IN',
     type: 'website',
-    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'cybersparky_ | Security Engineer',
-    description: 'Securing code. Shipping safe.',
-    creator: '@cybersparky',
+    title: 'Pranaw M (CyberSparky) — Offensive Security Engineer',
+    description:
+      'Web application penetration tester and bug bounty hunter. Specializing in XSS, IDOR, CSRF, and API security.',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -69,9 +83,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
-      'max-video-preview': -1,
     },
   },
   icons: {
@@ -79,6 +93,51 @@ export const metadata: Metadata = {
     apple: '/favicon.png',
   },
   category: 'technology',
+};
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Pranaw M',
+  alternateName: 'CyberSparky',
+  url: 'https://cybersparky.in',
+  jobTitle: 'Offensive Security Engineer',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Freelance / Bug Bounty',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Chennai',
+    addressCountry: 'IN',
+  },
+  knowsAbout: [
+    'Web Application Penetration Testing',
+    'Bug Bounty Hunting',
+    'XSS',
+    'IDOR',
+    'CSRF',
+    'API Security',
+    'Offensive Security',
+  ],
+  sameAs: [
+    'https://github.com/cyber-sparky',
+    'https://www.linkedin.com/in/cybersparky/',
+    'https://hackerone.com/cybersparky',
+  ],
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'CyberSparky',
+  url: 'https://cybersparky.in',
+  description:
+    'Portfolio and write-ups by Pranaw M, offensive security engineer and bug bounty hunter',
+  author: {
+    '@type': 'Person',
+    name: 'Pranaw M',
+  },
 };
 
 const themeScript = `
@@ -100,6 +159,8 @@ export default function RootLayout({
     <html lang="en" className={`dark ${jetbrainsMono.variable} ${outfit.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <JsonLd schema={personSchema} />
+        <JsonLd schema={websiteSchema} />
       </head>
       <body className="font-sans transition-colors duration-300">
         <a

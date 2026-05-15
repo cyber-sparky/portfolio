@@ -2,33 +2,36 @@ import type { Metadata } from 'next';
 import { absoluteUrls } from '@/app/lib/domains';
 
 export const metadata: Metadata = {
-  title: 'Blog — Security Writeups & Research',
+  title: 'Bug Bounty Write-ups',
   description:
-    'CTF writeups, mobile security research, and technical deep-dives by Pranaw M (cybersparky_) — covering web exploitation, Active Directory, Android internals, cryptography, and more.',
+    'Detailed vulnerability write-ups and bug bounty reports by Pranaw M covering XSS, IDOR, CSRF, and API security findings.',
   keywords: [
     'CTF writeups',
+    'bug bounty writeups',
     'security research',
     'web exploitation',
-    'Active Directory',
-    'Android security',
+    'XSS',
+    'IDOR',
+    'CSRF',
+    'API security',
     'HackTheBox writeups',
-    'PwnTillDawn writeups',
     'cybersparky blog',
   ],
   alternates: {
     canonical: absoluteUrls.writeups,
   },
   openGraph: {
-    title: 'Blog — Security Writeups & Research | cybersparky_',
+    title: 'Bug Bounty Write-ups | CyberSparky',
     description:
-      'CTF writeups, mobile security research, and technical deep-dives covering web exploitation, Active Directory, Android internals, and more.',
+      'Detailed vulnerability write-ups and bug bounty reports by Pranaw M covering XSS, IDOR, CSRF, and API security findings.',
     url: absoluteUrls.writeups,
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog — Security Writeups & Research',
-    description: 'CTF writeups and security research by cybersparky_.',
+    title: 'Bug Bounty Write-ups | CyberSparky',
+    description:
+      'Detailed vulnerability write-ups and bug bounty reports by Pranaw M covering XSS, IDOR, CSRF, and API security findings.',
   },
 };
 

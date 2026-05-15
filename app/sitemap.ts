@@ -7,13 +7,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticEntries: MetadataRoute.Sitemap = [
     {
-      url: absoluteUrls.home,
+      url: 'https://cybersparky.in',
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 1.0,
     },
     {
-      url: absoluteUrls.resume,
+      url: 'https://cybersparky.in/about',
       lastModified: now,
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -23,6 +23,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: absoluteUrls.resume,
+      lastModified: now,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://cybersparky.in/contact',
+      lastModified: now,
+      changeFrequency: 'yearly',
+      priority: 0.6,
     },
   ];
 

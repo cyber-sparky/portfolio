@@ -1,5 +1,4 @@
 import type { MetadataRoute } from 'next';
-import { absoluteUrls } from '@/app/lib/domains';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -9,8 +8,15 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
         disallow: ['/api/', '/_next/', '/admin/'],
       },
+      { userAgent: 'Amazonbot', disallow: '/' },
+      { userAgent: 'Applebot-Extended', disallow: '/' },
+      { userAgent: 'Bytespider', disallow: '/' },
+      { userAgent: 'CCBot', disallow: '/' },
+      { userAgent: 'GPTBot', disallow: '/' },
+      { userAgent: 'meta-externalagent', disallow: '/' },
+      { userAgent: 'CloudflareBrowserRenderingCrawler', disallow: '/' },
     ],
-    sitemap: `${absoluteUrls.home}/sitemap.xml`,
-    host: absoluteUrls.home,
+    sitemap: 'https://cybersparky.in/sitemap.xml',
+    host: 'https://cybersparky.in',
   };
 }
